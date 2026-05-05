@@ -1,14 +1,24 @@
 <!DOCTYPE html>
-<html style="margin:0; padding:0; height:100%; overflow:hidden;">
+<html lang="es">
 <head>
-    <title>MundoParalelo | Servicios Audiovisuales</title>
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MundoParalelo</title>
     <style>
-        body { margin:0; background:#000; display:flex; justify-content:center; align-items:center; min-height:100vh; }
-        img { max-width:100%; max-height:100vh; object-fit:contain; }
+        body, html { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background-color: #000; }
+        .main-container { position: relative; width: 100vw; height: 100vh; display: flex; align-items: center; justify-content: center; }
+        
+        /* CAPA 1: El Plexus */
+        .capa-fondo { position: absolute; width: 100%; height: 100%; object-fit: cover; z-index: 1; }
+
+        /* CAPA 2: El Logo/Texto */
+        .capa-logo { position: relative; z-index: 2; max-width: 70%; height: auto; }
     </style>
 </head>
 <body>
-    <img src="https://lh3.googleusercontent.com/u/0/d/1WKlD8rhsAIs3xdVTKZ2_26pcwtx2eC__=w1920-h1080-iv1" alt="Flyer MundoParalelo">
+    <div class="main-container">
+        <img src="1.png" class="capa-fondo">
+        <img src="2.png" class="capa-logo">
+    </div>
 </body>
 </html>
