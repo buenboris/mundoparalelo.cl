@@ -3,71 +3,70 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MundoParalelo | Operaciones</title>
+    <title>MundoParalelo | Control</title>
     <style>
         body, html { 
-            margin: 0; 
-            padding: 0; 
-            width: 100%; 
-            height: 100%; 
-            overflow: hidden; 
-            background-color: #000; 
+            margin: 0; padding: 0; 
+            width: 100%; height: 100%; 
+            overflow: hidden; background-color: #000; 
         }
         
-        .main-container { 
-            position: relative; 
-            width: 100vw; 
-            height: 100vh; 
-        }
+        .main-container { position: relative; width: 100vw; height: 100vh; }
 
         .capa-full { 
-            position: absolute; 
-            top: 0; 
-            left: 0; 
-            width: 100%; 
-            height: 100%; 
+            position: absolute; top: 0; left: 0; 
+            width: 100%; height: 100%; 
             object-fit: cover; 
         }
 
-        .z-fondo { z-index: 1; }
-        .z-marco-9 { z-index: 2; opacity: 0.8; }
-        .z-marco-10 { z-index: 4; }
+        /* ORDEN DE CAPAS (El sándwich lógico) */
+        
+        /* 1. Al fondo de todo el plexus base (por si hay fugas) */
+        .z-1 { z-index: 1; }
 
-        /* TU FOTO OPERANDO (Capa 8) */
+        /* 2. Tu foto operando centrada */
         .capa-operador { 
             position: absolute; 
-            top: 50%; 
-            left: 50%; 
+            top: 50%; left: 50%; 
             transform: translate(-50%, -50%); 
-            z-index: 3; 
-            width: 100%; /* Calza con el hueco del marco */
+            z-index: 2; 
+            width: 44%; /* Un poco más ancha para que la 9 la recorte bien */
             height: auto;
-            border: 1px solid rgba(0, 255, 255, 0.2); /* Un toque cian sutil */
         }
 
-        /* LOGO CON TRANSPARENCIA PARA VERTE TRABAJAR */
+        /* 3. El Marco 9 (Plexus + Recorte central) ENCIMA de tu foto */
+        .z-3 { z-index: 3; }
+
+        /* 4. El Marco 10 (Líneas blancas/cian superiores) */
+        .z-4 { z-index: 4; }
+
+        /* 5. El Logo HUD con un poco más de fuerza */
         .capa-logo { 
             position: absolute; 
-            top: 50%; 
-            left: 50%; 
+            top: 50%; left: 50%; 
             transform: translate(-50%, -50%); 
             z-index: 5; 
-            width: 45%; 
-            height: auto; 
-            opacity: 0.3; /* Bajamos la opacidad para que se vea la foto 8 detras */
+            width: 45%; height: auto; 
+            opacity: 0.5;
         }
     </style>
 </head>
 <body>
 
     <div class="main-container">
-        <img src="1.png" class="capa-full z-fondo">
-        <img src="9.png" class="capa-full z-marco-9">
-        <img src="10.png" class="capa-full z-marco-10">
-        
-        <!-- Tu imagen operando -->
+        <!-- Capa base -->
+        <img src="1.png" class="capa-full z-1">
+
+        <!-- Tu foto (ahora debajo del recorte del archivo 9) -->
         <img src="8.png" class="capa-operador">
 
+        <!-- Estructura que hace el recorte -->
+        <img src="9.png" class="capa-full z-3">
+
+        <!-- Marco superior -->
+        <img src="10.png" class="capa-full z-4">
+
+        <!-- Logo al frente -->
         <img src="2.png" class="capa-logo">
     </div>
 
