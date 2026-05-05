@@ -3,9 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MundoParalelo</title>
+    <title>MundoParalelo | Operaciones</title>
     <style>
-        /* Eliminamos márgenes y fijamos el negro de fondo */
         body, html { 
             margin: 0; 
             padding: 0; 
@@ -14,69 +13,62 @@
             overflow: hidden; 
             background-color: #000; 
         }
-
-        /* El contenedor ocupa toda la ventana visual */
+        
         .main-container { 
             position: relative; 
             width: 100vw; 
             height: 100vh; 
         }
 
-        /* Configuración para que el Plexus y los Marcos cubran todo sin dejar bordes */
         .capa-full { 
             position: absolute; 
             top: 0; 
             left: 0; 
             width: 100%; 
             height: 100%; 
-            object-fit: cover; /* Esta es la clave para que no queden franjas negras */
+            object-fit: cover; 
         }
 
-        /* Orden de las capas (Z-Index) */
         .z-fondo { z-index: 1; }
         .z-marco-9 { z-index: 2; opacity: 0.8; }
         .z-marco-10 { z-index: 4; }
 
-        /* Capa del Logo: Centrado absoluto definitivo */
+        /* TU FOTO OPERANDO (Capa 8) */
+        .capa-operador { 
+            position: absolute; 
+            top: 50%; 
+            left: 50%; 
+            transform: translate(-50%, -50%); 
+            z-index: 3; 
+            width: 42%; /* Calza con el hueco del marco */
+            height: auto;
+            border: 1px solid rgba(0, 255, 255, 0.2); /* Un toque cian sutil */
+        }
+
+        /* LOGO CON TRANSPARENCIA PARA VERTE TRABAJAR */
         .capa-logo { 
             position: absolute; 
             top: 50%; 
             left: 50%; 
             transform: translate(-50%, -50%); 
             z-index: 5; 
-            width: 100%; /* Ajusta este porcentaje para cambiar el tamaño del logo */
+            width: 45%; 
             height: auto; 
-        }
-
-        /* Capa de Contenido: Preparada para cuando pongamos las fotos/videos */
-        .capa-contenido { 
-            position: absolute; 
-            top: 50%; 
-            left: 50%; 
-            transform: translate(-50%, -50%); 
-            z-index: 3; 
-            width: 38%; 
-            height: auto; 
+            opacity: 0.3; /* Bajamos la opacidad para que se vea la foto 8 detras */
         }
     </style>
 </head>
 <body>
 
     <div class="main-container">
-        <!-- Capa 1: El Plexus -->
         <img src="1.png" class="capa-full z-fondo">
-
-        <!-- Capa 9: Estructura base -->
         <img src="9.png" class="capa-full z-marco-9">
-
-        <!-- Capa 10: Marco superior -->
         <img src="10.png" class="capa-full z-marco-10">
-
-        <!-- Capa 2: Tu Logo centrado -->
-        <img src="2.png" class="capa-logo">
         
-        <!-- El contenido (archivo 4) está listo pero "oculto" tras el logo -->
-        <!-- <img src="4.png" class="capa-contenido"> -->
+        <!-- Tu imagen operando -->
+        <img src="8.png" class="capa-operador">
+
+        <img src="2.png" class="capa-logo">
     </div>
 
 </body>
