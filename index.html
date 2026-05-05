@@ -3,13 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MundoParalelo | Interactive</title>
+    <title>MundoParalelo | Interactive Pro</title>
     <style>
         body, html { 
             margin: 0; padding: 0; 
             width: 100%; height: 100%; 
             overflow: hidden; background-color: #000; 
-            font-family: 'Orbitron', sans-serif;
         }
         
         .main-container { position: relative; width: 100vw; height: 100vh; }
@@ -20,41 +19,51 @@
             object-fit: cover; 
         }
 
-        /* TU FOTO OPERADOR CON TRANSICIÓN SUAVE */
+        /* TU FOTO: Estado inicial (Landing) - Invisible y desplazada a la izquierda */
         .capa-operador { 
             position: absolute; 
             top: 0; 
-            left: -10%; /* Posición original */
+            left: -30%; /* Más lejos para que el "slide in" sea notable */
             width: 100%; 
             height: 100%; 
             object-fit: cover;
             z-index: 2; 
-            transition: left 0.6s cubic-bezier(0.25, 1, 0.5, 1); /* Movimiento fluido tipo cine */
+            opacity: 0; /* Invisible en el landing */
+            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1); /* Entrada rápida y suave */
+            pointer-events: none; /* Para que no interfiera con el mouse si pasa encima */
         }
 
-        /* ÁREA DEL BOTÓN (Invisible por ahora, solo el trigger) */
+        /* ÁREA DEL BOTÓN */
         .btn-trigger {
             position: absolute;
             left: 20px;
-            top: 30%;
-            width: 200px;
-            height: 60px;
-            z-index: 10; /* Por encima de todo para captar el mouse */
+            top: 35%;
+            width: 250px;
+            height: 80px;
+            z-index: 10; 
             cursor: pointer;
-            border: 1px dashed rgba(0, 255, 255, 0.3); /* Guía visual temporal */
+            border-left: 3px solid rgba(0, 255, 255, 0.5); /* Estética de interfaz técnica */
+            background: rgba(0, 0, 0, 0.1);
             display: flex;
             align-items: center;
-            padding-left: 15px;
+            padding-left: 20px;
             color: #00ffff;
-            font-size: 12px;
+            font-family: Arial, sans-serif; /* Luego pondremos Orbitron */
+            font-size: 14px;
             text-transform: uppercase;
             letter-spacing: 2px;
+            transition: 0.3s;
         }
 
-        /* LA MAGIA: Cuando el mouse toca el botón, la imagen se desplaza */
+        /* LA LÓGICA DE REACCIÓN */
+        /* Cuando el mouse entra (Hover), la foto aparece y se clava en el -10% */
         .btn-trigger:hover ~ .capa-operador {
-            left: 5%; /* Se desplaza a la derecha para mostrar el contenido */
+            left: -10%; 
+            opacity: 1;
         }
+
+        /* Si el mouse sale, la transición de la clase .capa-operador 
+           hace que se devuelva automáticamente al -30% y opacidad 0 */
 
         .z1 { z-index: 1; }
         .z3 { z-index: 3; }
@@ -66,17 +75,17 @@
 <body>
 
     <div class="main-container">
-        <!-- 1. El Trigger del Botón (Ponerlo arriba en el HTML para que el selector ~ funcione) -->
-        <div class="btn-trigger">Servicio Streaming</div>
+        <!-- El Trigger debe ir antes de la imagen para que el selector "~" funcione -->
+        <div class="btn-trigger">Servicio Streaming Profesional</div>
 
-        <!-- 2. Tu foto (Ahora responde al hover del botón) -->
+        <!-- Tu foto (Capa 8) -->
         <img src="8.png" class="capa-operador">
 
-        <!-- 3. Resto de la estructura fija -->
-        <img src="1.png" class="capa-fix z1">
-        <img src="9.png" class="capa-fix z3">
-        <img src="10.png" class="capa-fix z4">
-        <img src="2.png" class="capa-fix z5">
+        <!-- Estructura Fija (Landing) -->
+        <img src="1.png" class="capa-full z1">
+        <img src="9.png" class="capa-full z3">
+        <img src="10.png" class="capa-full z4">
+        <img src="2.png" class="capa-full z5">
     </div>
 
 </body>
