@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MundoParalelo | Interactive Pro</title>
+    <title>MundoParalelo | Recalibrado</title>
     <style>
         body, html { 
             margin: 0; padding: 0; 
@@ -13,58 +13,64 @@
         
         .main-container { position: relative; width: 100vw; height: 100vh; }
 
+        /* TODAS las capas de imagen usan la misma regla para no perder el calce */
         .capa-fix { 
-            position: absolute; top: 0; left: 0; 
-            width: 100%; height: 100%; 
+            position: absolute; 
+            top: 0; 
+            left: 0; 
+            width: 100%; 
+            height: 100%; 
             object-fit: cover; 
+            pointer-events: none; /* Para que no bloqueen el clic del botón */
         }
 
-        /* TU FOTO: Estado inicial (Landing) - Invisible y desplazada a la izquierda */
+        /* TU FOTO: Dinámica */
         .capa-operador { 
             position: absolute; 
             top: 0; 
-            left: -30%; /* Más lejos para que el "slide in" sea notable */
+            left: -30%; /* Escondida a la izquierda */
             width: 100%; 
             height: 100%; 
             object-fit: cover;
             z-index: 2; 
-            opacity: 0; /* Invisible en el landing */
-            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1); /* Entrada rápida y suave */
-            pointer-events: none; /* Para que no interfiera con el mouse si pasa encima */
+            opacity: 0; 
+            transition: all 0.5s ease-in-out;
+            pointer-events: none;
         }
 
-        /* ÁREA DEL BOTÓN */
+        /* ÁREA DEL BOTÓN: El Trigger */
         .btn-trigger {
             position: absolute;
-            left: 20px;
-            top: 35%;
-            width: 250px;
-            height: 80px;
+            left: 30px;
+            top: 40%;
+            width: 220px;
+            height: 60px;
             z-index: 10; 
             cursor: pointer;
-            border-left: 3px solid rgba(0, 255, 255, 0.5); /* Estética de interfaz técnica */
-            background: rgba(0, 0, 0, 0.1);
+            border-left: 3px solid #00ffff;
+            background: rgba(0, 255, 255, 0.05);
             display: flex;
             align-items: center;
-            padding-left: 20px;
+            padding-left: 15px;
             color: #00ffff;
-            font-family: Arial, sans-serif; /* Luego pondremos Orbitron */
-            font-size: 14px;
+            font-family: sans-serif;
+            font-size: 11px;
             text-transform: uppercase;
             letter-spacing: 2px;
             transition: 0.3s;
         }
 
-        /* LA LÓGICA DE REACCIÓN */
-        /* Cuando el mouse entra (Hover), la foto aparece y se clava en el -10% */
+        .btn-trigger:hover {
+            background: rgba(0, 255, 255, 0.15);
+        }
+
+        /* Lógica de activación para la foto 8 */
         .btn-trigger:hover ~ .capa-operador {
-            left: -10%; 
+            left: -10%; /* Posición ideal que encontramos antes */
             opacity: 1;
         }
 
-        /* Si el mouse sale, la transición de la clase .capa-operador 
-           hace que se devuelva automáticamente al -30% y opacidad 0 */
-
+        /* Niveles de profundidad */
         .z1 { z-index: 1; }
         .z3 { z-index: 3; }
         .z4 { z-index: 4; }
@@ -75,17 +81,19 @@
 <body>
 
     <div class="main-container">
-        <!-- El Trigger debe ir antes de la imagen para que el selector "~" funcione -->
-        <div class="btn-trigger">Servicio Streaming Profesional</div>
+        <!-- El trigger arriba para que controle lo que viene abajo -->
+        <div class="btn-trigger">SERVICIO STREAMING PROFESIONAL</div>
 
-        <!-- Tu foto (Capa 8) -->
+        <!-- Capa 1: Fondo -->
+        <img src="1.png" class="capa-fix z1">
+
+        <!-- Capa 8: Tu foto dinámica -->
         <img src="8.png" class="capa-operador">
 
-        <!-- Estructura Fija (Landing) -->
-        <img src="1.png" class="capa-full z1">
-        <img src="9.png" class="capa-full z3">
-        <img src="10.png" class="capa-full z4">
-        <img src="2.png" class="capa-full z5">
+        <!-- Estructura Fija -->
+        <img src="9.png" class="capa-fix z3">
+        <img src="10.png" class="capa-fix z4">
+        <img src="2.png" class="capa-fix z5">
     </div>
 
 </body>
