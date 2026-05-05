@@ -3,7 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MundoParalelo | Recalibrado</title>
+    <title>MundoParalelo | Contacto</title>
+    <!-- Fuente Orbitron para consistencia técnica -->
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
     <style>
         body, html { 
             margin: 0; padding: 0; 
@@ -13,87 +15,62 @@
         
         .main-container { position: relative; width: 100vw; height: 100vh; }
 
-        /* TODAS las capas de imagen usan la misma regla para no perder el calce */
         .capa-fix { 
-            position: absolute; 
-            top: 0; 
-            left: 0; 
-            width: 100%; 
-            height: 100%; 
+            position: absolute; top: 0; left: 0; 
+            width: 100%; height: 100%; 
             object-fit: cover; 
-            pointer-events: none; /* Para que no bloqueen el clic del botón */
+            pointer-events: none; 
         }
 
-        /* TU FOTO: Dinámica */
-        .capa-operador { 
-            position: absolute; 
-            top: 0; 
-            left: -30%; /* Escondida a la izquierda */
-            width: 100%; 
-            height: 100%; 
+        /* CAPA 11: Ahora con puntero de clic */
+        .capa-mail { 
+            position: absolute; top: 0; left: 0; 
+            width: 100%; height: 100%; 
             object-fit: cover;
-            z-index: 2; 
-            opacity: 0; 
-            transition: all 0.5s ease-in-out;
-            pointer-events: none;
+            z-index: 6; /* Arriba de todo para que sea clickable */
+            cursor: pointer;
+            pointer-events: auto; /* Habilitamos el clic específicamente aquí */
         }
 
-        /* ÁREA DEL BOTÓN: El Trigger */
+        .capa-operador { 
+            position: absolute; top: 0; left: -30%; 
+            width: 100%; height: 100%; 
+            object-fit: cover; z-index: 2; opacity: 0; 
+            transition: all 0.5s ease-in-out; pointer-events: none;
+        }
+
         .btn-trigger {
-            position: absolute;
-            left: 30px;
-            top: 40%;
-            width: 220px;
-            height: 60px;
-            z-index: 10; 
-            cursor: pointer;
-            border-left: 3px solid #00ffff;
-            background: rgba(0, 255, 255, 0.05);
-            display: flex;
-            align-items: center;
-            padding-left: 15px;
-            color: #00ffff;
-            font-family: sans-serif;
-            font-size: 11px;
-            text-transform: uppercase;
-            letter-spacing: 2px;
+            position: absolute; left: 30px; top: 40%;
+            width: 220px; height: 60px; z-index: 10; 
+            cursor: pointer; border-left: 3px solid #017b9e;
+            background: rgba(1, 123, 158, 0.05);
+            display: flex; align-items: center; padding-left: 15px;
+            color: #017b9e; font-family: 'Orbitron', sans-serif;
+            font-size: 11px; text-transform: uppercase; letter-spacing: 2px;
             transition: 0.3s;
         }
 
-        .btn-trigger:hover {
-            background: rgba(0, 255, 255, 0.15);
-        }
+        .btn-trigger:hover { background: rgba(1, 123, 158, 0.15); color: #00ffff; border-left: 3px solid #00ffff; }
+        .btn-trigger:hover ~ .capa-operador { left: -10%; opacity: 1; }
 
-        /* Lógica de activación para la foto 8 */
-        .btn-trigger:hover ~ .capa-operador {
-            left: -10%; /* Posición ideal que encontramos antes */
-            opacity: 1;
-        }
-
-        /* Niveles de profundidad */
-        .z1 { z-index: 1; }
-        .z3 { z-index: 3; }
-        .z4 { z-index: 4; }
-        .z5 { z-index: 5; }
-
+        .z1 { z-index: 1; } .z3 { z-index: 3; } .z4 { z-index: 4; } .z5 { z-index: 5; }
     </style>
 </head>
 <body>
 
     <div class="main-container">
-        <!-- El trigger arriba para que controle lo que viene abajo -->
         <div class="btn-trigger">SERVICIO STREAMING PROFESIONAL</div>
 
-        <!-- Capa 1: Fondo -->
         <img src="1.png" class="capa-fix z1">
-
-        <!-- Capa 8: Tu foto dinámica -->
         <img src="8.png" class="capa-operador">
-
-        <!-- Estructura Fija -->
         <img src="9.png" class="capa-fix z3">
         <img src="10.png" class="capa-fix z4">
         <img src="2.png" class="capa-fix z5">
+
+        <!-- CAPA 11: El Mail con Hipervínculo -->
+        <a href="mailto:contacto@mundoparalelo.cl">
+            <img src="11.png" class="capa-mail">
+        </a>
     </div>
 
 </body>
