@@ -6,6 +6,37 @@
     <title>MundoParalelo | Live Session</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
     <style>
+/* --- Optimización para Smartphone (Vertical) --- */
+        @media (max-width: 768px) and (orientation: portrait) {
+            .video-fondo, .mask {
+                /* Rotamos 90 grados y escalamos para que el video horizontal cubra el alto del celular */
+                transform: rotate(90deg) scale(2.8); 
+                transform-origin: center;
+                object-fit: cover;
+            }
+
+            .main-container {
+                /* Centramos todo el contenido en el eje vertical del teléfono */
+                padding: 15px;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+            }
+
+            h1 {
+                /* El logo de MundoParalelo se ajusta al ancho del celular sin romperse */
+                font-size: 9vw; 
+                width: 95%;
+                margin-bottom: 20px;
+            }
+
+            .email {
+                /* Ajustamos el tamaño del texto del mail para que sea legible en pantallas pequeñas */
+                font-size: 4.5vw;
+                bottom: 8%;
+            }
+        }
         body, html { 
             margin: 0; padding: 0; 
             width: 100%; height: 100%; 
