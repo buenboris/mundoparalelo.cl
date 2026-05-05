@@ -3,71 +3,67 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MundoParalelo | Control</title>
+    <title>MundoParalelo | Master</title>
     <style>
         body, html { 
-            margin: 0; padding: 0; 
-            width: 100%; height: 100%; 
-            overflow: hidden; background-color: #000; 
+            margin: 0; 
+            padding: 0; 
+            width: 100%; 
+            height: 100%; 
+            overflow: hidden; 
+            background-color: #000; 
         }
         
-        .main-container { position: relative; width: 100vw; height: 100vh; }
+        .main-container { 
+            position: relative; 
+            width: 100vw; 
+            height: 100vh; 
+        }
 
-        .capa-full { 
-            position: absolute; top: 0; left: 0; 
-            width: 100%; height: 100%; 
+        .capa-fix { 
+            position: absolute; 
+            top: 0; 
+            left: 0; 
+            width: 100%; 
+            height: 100%; 
             object-fit: cover; 
         }
 
-        /* ORDEN DE CAPAS (El sándwich lógico) */
-        
-        /* 1. Al fondo de todo el plexus base (por si hay fugas) */
-        .z-1 { z-index: 1; }
-
-        /* 2. Tu foto operando centrada */
+        /* AJUSTE ESPECÍFICO CAPA 8: -10% hacia la izquierda */
         .capa-operador { 
             position: absolute; 
-            top: 50%; left: 50%; 
-            transform: translate(-50%, -50%); 
+            top: 0; 
+            left: -10%; /* Desplazamiento solicitado */
+            width: 100%; 
+            height: 100%; 
+            object-fit: cover;
             z-index: 2; 
-            width: 100%; /* Un poco más ancha para que la 9 la recorte bien */
-            height: auto;
         }
 
-        /* 3. El Marco 9 (Plexus + Recorte central) ENCIMA de tu foto */
-        .z-3 { z-index: 3; }
+        .z1 { z-index: 1; }
+        .z3 { z-index: 3; }
+        .z4 { z-index: 4; }
+        .z5 { z-index: 5; }
 
-        /* 4. El Marco 10 (Líneas blancas/cian superiores) */
-        .z-4 { z-index: 4; }
-
-        /* 5. El Logo HUD con un poco más de fuerza */
-        .capa-logo { 
-            position: absolute; 
-            top: 50%; left: 50%; 
-            transform: translate(-50%, -50%); 
-            z-index: 5; 
-            width: 45%; height: auto; 
-            opacity: 0.5;
-        }
     </style>
 </head>
 <body>
 
     <div class="main-container">
-        <!-- Capa base -->
-        <img src="1.png" class="capa-full z-1">
+        <!-- 1. Plexus fondo -->
+        <img src="1.png" class="capa-fix z1">
 
-        <!-- Tu foto (ahora debajo del recorte del archivo 9) -->
+        <!-- 8. Tu foto con el offset del 10% -->
         <img src="8.png" class="capa-operador">
 
-        <!-- Estructura que hace el recorte -->
-        <img src="9.png" class="capa-full z-3">
+        <!-- 9. Recorte (se mantiene al 0,0 para que calce con el logo) -->
+        <img src="9.png" class="capa-fix z3">
 
-        <!-- Marco superior -->
-        <img src="10.png" class="capa-full z-4">
+        <!-- 10. Marco estructural -->
+        <img src="10.png" class="capa-fix z4">
 
-        <!-- Logo al frente -->
-        <img src="2.png" class="capa-logo">
+        <!-- 2. Logo (se mantiene al 0,0 para centrado perfecto) -->
+        <img src="2.png" class="capa-fix z5">
     </div>
 
 </body>
