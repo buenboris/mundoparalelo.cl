@@ -3,22 +3,44 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MundoParalelo</title>
+    <title>MundoParalelo | Infraestructura</title>
     <style>
         body, html { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background-color: #000; }
         .main-container { position: relative; width: 100vw; height: 100vh; display: flex; align-items: center; justify-content: center; }
         
-        /* CAPA 1: El Plexus */
+        /* CAPA 1: Fondo Plexus */
         .capa-fondo { position: absolute; width: 100%; height: 100%; object-fit: cover; z-index: 1; }
 
-        /* CAPA 2: El Logo/Texto */
-        .capa-logo { position: relative; z-index: 2; max-width: 70%; height: auto; }
+        /* CAPA 9: Marco Base Central */
+        .capa-marco-9 { position: absolute; width: 100%; height: 100%; object-fit: contain; z-index: 2; pointer-events: none; opacity: 0.8; }
+
+        /* CAPA 10: Marco Estructural Superior */
+        .capa-marco-10 { position: absolute; width: 100%; height: 100%; object-fit: contain; z-index: 4; pointer-events: none; }
+
+        /* ESPACIO PARA EL CONTENIDO (Archivo 4 próximamente) */
+        /* Lo dejamos listo en el nivel z-index 3 (el sándwich) */
+        .capa-contenido { 
+            position: absolute; 
+            z-index: 3; 
+            width: 35%; 
+            height: auto;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        /* CAPA 2: Logo MundoParalelo */
+        .capa-logo { position: absolute; bottom: 5%; z-index: 5; max-width: 30%; height: auto; }
     </style>
 </head>
 <body>
     <div class="main-container">
         <img src="1.png" class="capa-fondo">
+        <img src="9.png" class="capa-marco-9">
+        <img src="10.png" class="capa-marco-10">
         <img src="2.png" class="capa-logo">
+        <!-- Cuando quieras ver la orquesta, solo descomenta la línea de abajo -->
+        <!-- <img src="4.png" class="capa-contenido"> -->
     </div>
 </body>
 </html>
