@@ -3,8 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MundoParalelo | Contacto</title>
-    <!-- Fuente Orbitron para consistencia técnica -->
+    <title>MundoParalelo | Live Session</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
     <style>
         body, html { 
@@ -15,6 +14,17 @@
         
         .main-container { position: relative; width: 100vw; height: 100vh; }
 
+        /* EL MOTOR DE VIDEO */
+        .video-fondo {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 1;
+        }
+
         .capa-fix { 
             position: absolute; top: 0; left: 0; 
             width: 100%; height: 100%; 
@@ -22,21 +32,17 @@
             pointer-events: none; 
         }
 
-        /* CAPA 11: Ahora con puntero de clic */
-        .capa-mail { 
-            position: absolute; top: 0; left: 0; 
-            width: 100%; height: 100%; 
-            object-fit: cover;
-            z-index: 6; /* Arriba de todo para que sea clickable */
-            cursor: pointer;
-            pointer-events: auto; /* Habilitamos el clic específicamente aquí */
-        }
-
         .capa-operador { 
             position: absolute; top: 0; left: -30%; 
             width: 100%; height: 100%; 
             object-fit: cover; z-index: 2; opacity: 0; 
             transition: all 0.5s ease-in-out; pointer-events: none;
+        }
+
+        .capa-mail { 
+            position: absolute; top: 0; left: 0; 
+            width: 100%; height: 100%; 
+            object-fit: cover; z-index: 6; cursor: pointer; pointer-events: auto;
         }
 
         .btn-trigger {
@@ -53,7 +59,7 @@
         .btn-trigger:hover { background: rgba(1, 123, 158, 0.15); color: #00ffff; border-left: 3px solid #00ffff; }
         .btn-trigger:hover ~ .capa-operador { left: -10%; opacity: 1; }
 
-        .z1 { z-index: 1; } .z3 { z-index: 3; } .z4 { z-index: 4; } .z5 { z-index: 5; }
+        .z3 { z-index: 3; } .z4 { z-index: 4; } .z5 { z-index: 5; }
     </style>
 </head>
 <body>
@@ -61,13 +67,21 @@
     <div class="main-container">
         <div class="btn-trigger">SERVICIO STREAMING PROFESIONAL</div>
 
-        <img src="1.png" class="capa-fix z1">
+        <!-- VIDEO BACKGROUND -->
+        <video autoplay muted loop playsinline class="video-fondo">
+            <source src="plexus_BG.mp4" type="video/mp4">
+            Tu navegador no soporta video.
+        </video>
+
+        <!-- TU FOTO DINÁMICA -->
         <img src="8.png" class="capa-operador">
+
+        <!-- ASSETS ESTÁTICOS -->
         <img src="9.png" class="capa-fix z3">
         <img src="10.png" class="capa-fix z4">
         <img src="2.png" class="capa-fix z5">
 
-        <!-- CAPA 11: El Mail con Hipervínculo -->
+        <!-- CONTACTO -->
         <a href="mailto:contacto@mundoparalelo.cl">
             <img src="11.png" class="capa-mail">
         </a>
