@@ -3,44 +3,81 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MundoParalelo | Infraestructura</title>
+    <title>MundoParalelo</title>
     <style>
-        body, html { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background-color: #000; }
-        .main-container { position: relative; width: 100vw; height: 100vh; display: flex; align-items: center; justify-content: center; }
-        
-        /* CAPA 1: Fondo Plexus */
-        .capa-fondo { position: absolute; width: 100%; height: 100%; object-fit: cover; z-index: 1; }
-
-        /* CAPA 9: Marco Base Central */
-        .capa-marco-9 { position: absolute; width: 100%; height: 100%; object-fit: contain; z-index: 2; pointer-events: none; opacity: 0.8; }
-
-        /* CAPA 10: Marco Estructural Superior */
-        .capa-marco-10 { position: absolute; width: 100%; height: 100%; object-fit: contain; z-index: 4; pointer-events: none; }
-
-        /* ESPACIO PARA EL CONTENIDO (Archivo 4 próximamente) */
-        /* Lo dejamos listo en el nivel z-index 3 (el sándwich) */
-        .capa-contenido { 
-            position: absolute; 
-            z-index: 3; 
-            width: 35%; 
-            height: auto;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
+        /* Eliminamos márgenes y fijamos el negro de fondo */
+        body, html { 
+            margin: 0; 
+            padding: 0; 
+            width: 100%; 
+            height: 100%; 
+            overflow: hidden; 
+            background-color: #000; 
         }
 
-        /* CAPA 2: Logo MundoParalelo */
-        .capa-logo { position: absolute; bottom: 5%; z-index: 5; max-width: 30%; height: auto; }
+        /* El contenedor ocupa toda la ventana visual */
+        .main-container { 
+            position: relative; 
+            width: 100vw; 
+            height: 100vh; 
+        }
+
+        /* Configuración para que el Plexus y los Marcos cubran todo sin dejar bordes */
+        .capa-full { 
+            position: absolute; 
+            top: 0; 
+            left: 0; 
+            width: 100%; 
+            height: 100%; 
+            object-fit: cover; /* Esta es la clave para que no queden franjas negras */
+        }
+
+        /* Orden de las capas (Z-Index) */
+        .z-fondo { z-index: 1; }
+        .z-marco-9 { z-index: 2; opacity: 0.8; }
+        .z-marco-10 { z-index: 4; }
+
+        /* Capa del Logo: Centrado absoluto definitivo */
+        .capa-logo { 
+            position: absolute; 
+            top: 50%; 
+            left: 50%; 
+            transform: translate(-50%, -50%); 
+            z-index: 5; 
+            width: 45%; /* Ajusta este porcentaje para cambiar el tamaño del logo */
+            height: auto; 
+        }
+
+        /* Capa de Contenido: Preparada para cuando pongamos las fotos/videos */
+        .capa-contenido { 
+            position: absolute; 
+            top: 50%; 
+            left: 50%; 
+            transform: translate(-50%, -50%); 
+            z-index: 3; 
+            width: 38%; 
+            height: auto; 
+        }
     </style>
 </head>
 <body>
+
     <div class="main-container">
-        <img src="1.png" class="capa-fondo">
-        <img src="9.png" class="capa-marco-9">
-        <img src="10.png" class="capa-marco-10">
+        <!-- Capa 1: El Plexus -->
+        <img src="1.png" class="capa-full z-fondo">
+
+        <!-- Capa 9: Estructura base -->
+        <img src="9.png" class="capa-full z-marco-9">
+
+        <!-- Capa 10: Marco superior -->
+        <img src="10.png" class="capa-full z-marco-10">
+
+        <!-- Capa 2: Tu Logo centrado -->
         <img src="2.png" class="capa-logo">
-        <!-- Cuando quieras ver la orquesta, solo descomenta la línea de abajo -->
+        
+        <!-- El contenido (archivo 4) está listo pero "oculto" tras el logo -->
         <!-- <img src="4.png" class="capa-contenido"> -->
     </div>
+
 </body>
 </html>
