@@ -100,19 +100,22 @@
 
 .email {
     display: inline-block;
-    position: absolute; 
-    bottom: 40px;       /* Lo separa del borde inferior */
+    position: fixed;    /* ANCLA el botón a la pantalla */
+    bottom: 30px;       /* Lo separa 30px del borde de abajo */
     left: 50%;
-    transform: translateX(-50%); /* Centrado horizontal perfecto */
-    z-index: 9999;      /* Siempre al frente */
-    color: #00ffff;     /* Color Cyan */
+    transform: translateX(-50%); /* Centrado horizontal exacto */
+    z-index: 99999;     /* Lo pone por delante de TODOS los layers */
+    color: #00ffff !important; /* Fuerza el color Cyan */
     font-family: 'Orbitron', sans-serif;
     text-decoration: none;
     font-size: 0.8rem;
     letter-spacing: 3px;
     text-transform: uppercase;
-    text-shadow: 0 0 8px #00ffff; /* Efecto neon */
+    text-shadow: 0 0 10px #00ffff;
     transition: 0.3s;
+    background: rgba(0, 0, 0, 0.5); /* Fondo semitransparente para legibilidad */
+    padding: 10px 20px;
+    border-radius: 5px;
 }
 
 .email:hover {
