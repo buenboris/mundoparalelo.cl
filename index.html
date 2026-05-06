@@ -99,13 +99,25 @@
 }
 
 .email {
-    display: inline-block; /* Evita que sea gigante */
-    position: relative;    /* Permite usar z-index */
-    z-index: 9999 !important; /* Lo trae al frente de TODO */
-    color: #00ffff;        /* Asegúrate de que el color sea visible */
+    display: inline-block;
+    position: absolute; 
+    bottom: 40px;       /* Lo separa del borde inferior */
+    left: 50%;
+    transform: translateX(-50%); /* Centrado horizontal perfecto */
+    z-index: 9999;      /* Siempre al frente */
+    color: #00ffff;     /* Color Cyan */
+    font-family: 'Orbitron', sans-serif;
     text-decoration: none;
-    pointer-events: auto;  /* Activa los clics */
-    margin-top: 20px;      /* Espacio para que no choque con lo de arriba */
+    font-size: 0.8rem;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    text-shadow: 0 0 8px #00ffff; /* Efecto neon */
+    transition: 0.3s;
+}
+
+.email:hover {
+    color: white;
+    text-shadow: 0 0 15px #00ffff, 0 0 20px #00ffff;
 }
 
 .capa-mail {
