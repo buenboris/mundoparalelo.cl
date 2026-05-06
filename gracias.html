@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="refresh" content="5;url=index.html">
+    <title>Gracias | MundoParalelo</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body, html {
+            margin: 0; padding: 0;
+            width: 100%; height: 100%;
+            overflow: hidden; background-color: #000;
+            font-family: 'Orbitron', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #00ffff;
+            text-align: center;
+        }
+
+        .video-fondo {
+            position: fixed;
+            top: 50%; left: 50%;
+            min-width: 100%; min-height: 100%;
+            transform: translate(-50%, -50%);
+            z-index: -1;
+            filter: brightness(0.3);
+        }
+
+        .mensaje-box {
+            padding: 40px;
+            border: 1px solid #00ffff;
+            background: rgba(0, 0, 0, 0.8);
+            box-shadow: 0 0 30px rgba(0, 255, 255, 0.2);
+            max-width: 600px;
+        }
+
+        h1 { font-size: 1.5rem; letter-spacing: 4px; margin-bottom: 20px; }
+        p { font-size: 0.9rem; line-height: 1.6; letter-spacing: 1px; color: white; }
+        
+        /* Barra de progreso visual de 5 segundos */
+        .loader {
+            height: 2px;
+            background: #00ffff;
+            margin-top: 30px;
+            animation: load 5s linear forwards;
+        }
+
+        @keyframes load {
+            0% { width: 0%; }
+            100% { width: 100%; }
+        }
+    </style>
+</head>
+<body>
+
+    <video autoplay muted loop playsinline class="video-fondo">
+        <source src="Plexus_BG.mp4" type="video/mp4">
+    </video>
+
+    <div class="mensaje-box">
+        <h1>¡RECIBIDO!</h1>
+        <p>Gracias por tu mensaje. Nos contactaremos contigo en las próximas horas dentro de horario hábil.</p>
+        <div class="loader"></div>
+    </div>
+
+</body>
+</html>
