@@ -91,6 +91,26 @@
         .btn-trigger:hover ~ .capa-operador { left: -10%; opacity: 1; }
 
         .z3 { z-index: 3; } .z4 { z-index: 4; } .z5 { z-index: 5; }
+  .contact-container {
+    position: relative;
+    z-index: 100; /* Asegura que esté por encima del video pero no cubra todo */
+    text-align: center; /* O la posición que prefieras */
+    margin-top: 20px;
+}
+
+.email {
+    display: inline-block; /* CLAVE: evita que el enlace se expanda a todo el ancho */
+    width: auto; 
+    height: auto;
+    text-decoration: none;
+    pointer-events: auto; /* Solo permite clics aquí */
+}
+
+.capa-mail {
+    display: block;
+    margin: 0 auto;
+    max-width: 300px; /* Ajusta según el tamaño real de tu imagen 11.png */
+}
     </style>
 </head>
 <body>
