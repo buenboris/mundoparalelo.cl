@@ -99,17 +99,20 @@
 }
 
 .email {
-    display: inline-block; /* CLAVE: evita que el enlace se expanda a todo el ancho */
-    width: auto; 
-    height: auto;
+    display: inline-block; /* Evita que sea gigante */
+    position: relative;    /* Permite usar z-index */
+    z-index: 9999 !important; /* Lo trae al frente de TODO */
+    color: #00ffff;        /* Asegúrate de que el color sea visible */
     text-decoration: none;
-    pointer-events: auto; /* Solo permite clics aquí */
+    pointer-events: auto;  /* Activa los clics */
+    margin-top: 20px;      /* Espacio para que no choque con lo de arriba */
 }
 
 .capa-mail {
     display: block;
-    margin: 0 auto;
-    max-width: 300px; /* Ajusta según el tamaño real de tu imagen 11.png */
+    width: 100%;           /* O el ancho que necesites para la imagen 11.png */
+    max-width: 300px;
+    margin: 10px auto;
 }
     </style>
 </head>
