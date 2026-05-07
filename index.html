@@ -7,6 +7,30 @@
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
     <style>
 /* --- Optimización para Smartphone (Vertical) --- */
+        .logo-contenedor {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    text-align: center;
+    z-index: 5;
+}
+.logo-principal {
+    font-family: 'Orbitron', sans-serif;
+    color: #00fbff;
+    font-size: 5.5vw;
+    font-weight: 900;
+    letter-spacing: 15px;
+    text-transform: uppercase;
+    margin: 0;
+    text-shadow: 0 0 10px rgba(0, 251, 255, 0.9), 0 0 20px rgba(0, 251, 255, 0.5), 0 0 40px rgba(0, 251, 255, 0.3);
+    white-space: nowrap;
+}
+.punto-cl {
+    font-size: 3.5vw;
+    opacity: 0.8;
+}
         @media (max-width: 768px) and (orientation: portrait) {
             .video-fondo, .mask {
                 /* Rotamos 90 grados y escalamos para que el video horizontal cubra el alto del celular */
@@ -148,7 +172,9 @@
         <!-- ASSETS ESTÁTICOS -->
         <img src="9.png" class="capa-fix z3">
         <img src="10.png" class="capa-fix z4">
-        <img src="2.png" class="capa-fix z5">
+        <div class="logo-contenedor">
+    <h1 class="logo-principal">MUNDOPARALELO<span class="punto-cl">.CL</span></h1>
+</div>
 
        <!-- CONTACTO -->
 <div class="contact-container"> 
