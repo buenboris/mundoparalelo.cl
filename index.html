@@ -156,14 +156,56 @@
     max-width: 300px;
     margin: 10px auto;
 }
+    /* EFECTO DE DESENFOQUE */
+.blur-active { filter: blur(10px) brightness(0.4); transition: 0.5s; }
+
+/* SISTEMA DE TEATRO CRT */
+.teatro-overlay {
+    position: fixed; top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0,0,0,0.85);
+    display: none; justify-content: center; align-items: center;
+    z-index: 10000;
+}
+
+.rayo-calipso {
+    position: absolute; width: 0%; height: 2px;
+    background: #00ffff; box-shadow: 0 0 25px #00ffff;
+    transition: width 0.4s ease-in-out;
+}
+
+.rayo-active { width: 100%; }
+
+.contenedor-video-pro {
+    width: 85%; max-width: 1100px; aspect-ratio: 16/9;
+    background: #000; border: 1px solid rgba(0, 255, 255, 0.3);
+    position: relative; opacity: 0; transition: opacity 0.6s;
+}
+
+.cerrar-video {
+    position: absolute; top: -50px; right: 0;
+    color: #00ffff; font-size: 35px; cursor: pointer;
+}
+#reproductorVideo { width: 100%; height: 100%; border: none; }
+    
     </style>
 </head>
 <body>
 
     <div class="main-container">
-        <div class="btn-trigger">SERVICIO STREAMING PROFESIONAL</div>
+        
+        <div style="position: absolute; left: 30px; top: 30%; z-index: 20; display: flex; flex-direction: column; gap: 15px;">
+            
+            <div class="btn-trigger">SERVICIO STREAMING PROFESIONAL</div>
+            
+            <div class="btn-trigger" onclick="verVideo()">NUESTROS SERVICIOS (VER VIDEO)</div>
+            
+            <div class="btn-trigger" onclick="window.location.href='#contacto'">CONTACTO DIRECTO</div>
+            
+            <div class="btn-trigger" onclick="window.location.href='#portafolio'">PROYECTOS 3D / VR</div>
+            
+        </div>
 
-        <!-- VIDEO BACKGROUND BLINDADO -->
         <video autoplay muted loop playsinline class="video-fondo">
             <source src="./Plexus_BG.mp4" type="video/mp4">
             Tu navegador no soporta video.
@@ -189,5 +231,41 @@
 
 </body>
 </html>
+<div id="videoTeatro" class="teatro-overlay">
+     <div class="rayo-calipso"></div>
+     <div class="contenedor-video-pro">
+         <span class="cerrar-video" onclick="terminarEfecto()">&times;</span>
+         <iframe id="reproductorVideo" src="" allow="autoplay"></iframe>
+     </div>
+ </div>
+
+ <script>
+     function verVideo() {
+         const idVideo = "15qVZc8Don4ger6RPv060hzCI_fnF7fut"; 
+         const teatro = document.getElementById('videoTeatro');
+         const rayo = teatro.querySelector('.rayo-calipso');
+         const videoCont = teatro.querySelector('.contenedor-video-pro');
+         const content = document.querySelector('.main-container');
+
+         teatro.style.display = 'flex';
+         content.classList.add('blur-active');
+
+         setTimeout(() => { rayo.classList.add('rayo-active'); }, 100);
+         setTimeout(() => {
+             document.getElementById('reproductorVideo').src = `https://drive.google.com/file/d/${idVideo}/preview`;
+             videoCont.style.opacity = '1';
+         }, 800);
+     }
+
+     function terminarEfecto() {
+         const teatro = document.getElementById('videoTeatro');
+         const content = document.querySelector('.main-container');
+         document.getElementById('reproductorVideo').src = "";
+         teatro.style.display = 'none';
+         content.classList.remove('blur-active');
+         teatro.querySelector('.rayo-calipso').classList.remove('rayo-active');
+         teatro.querySelector('.contenedor-video-pro').style.opacity = '0';
+     }
+ </script>
 </body>
 </html>
