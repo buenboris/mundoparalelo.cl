@@ -6,186 +6,129 @@
     <title>MundoParalelo | Servicios Audiovisuales</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
     <style>
-
-        .logo-contenedor {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 100%;
-    text-align: center;
-    z-index: 5;
-}
-.logo-principal {
-    font-family: 'Orbitron', sans-serif;
-    color: #00fbff;
-    font-size: 4vw;
-    font-weight: 650;
-    letter-spacing: 8px;
-    text-transform: uppercase;
-    margin: 0;
-    text-shadow: 0 0 8px rgba(0, 251, 255, 0.9), 0 0 15px rgba(0, 251, 255, 0.5), 0 0 40px rgba(0, 251, 255, 0.3);
-    white-space: nowrap;
-    cursor: default; /* Mantiene la flecha normal */
-    user-select: none; /* Evita que el usuario pueda "pintar" el texto en azul por error */
-}
-
-.punto-cl {
-    font-size: 3.5vw;
-    opacity: 1;
-}
-        @media (max-width: 768px) and (orientation: portrait) {
-            .video-fondo, .mask {
-                /* Rotamos 90 grados y escalamos para que el video horizontal cubra el alto del celular */
-                transform: rotate(90deg) scale(2.8); 
-                transform-origin: center;
-                object-fit: cover;
-            }
-
-            .main-container {
-                /* Centramos todo el contenido en el eje vertical del teléfono */
-                padding: 15px;
-                display: flex;
-                flex-direction: column;
-                justify-content: center;
-                align-items: center;
-            }
-
-            h1 {
-                /* El logo de MundoParalelo se ajusta al ancho del celular sin romperse */
-                font-size: 9vw; 
-                width: 95%;
-                margin-bottom: 20px;
-            }
-
-            .email {
-                /* Ajustamos el tamaño del texto del mail para que sea legible en pantallas pequeñas */
-                font-size: 4.5vw;
-                bottom: 8%;
-            }
-        }
-        body, html { 
-            margin: 0; padding: 0; 
-            width: 100%; height: 100%; 
-            overflow: hidden; background-color: #000; 
-        }
+        /* --- ESTILOS BASE (TU DEFAULT) --- */
+        body, html { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background-color: #000; }
+        .main-container { position: relative; width: 100vw; height: 100vh; transition: 0.5s; }
+        .video-fondo { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: 1; }
+        .capa-fix { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; pointer-events: none; }
+        .capa-operador { position: absolute; top: 0; left: -30%; width: 100%; height: 100%; object-fit: cover; z-index: 2; opacity: 0; transition: all 0.5s ease-in-out; pointer-events: none; }
+        .z3 { z-index: 3; } .z4 { z-index: 4; }
         
-        .main-container { position: relative; width: 100vw; height: 100vh; }
+        .logo-contenedor { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 100%; text-align: center; z-index: 5; }
+        .logo-principal { font-family: 'Orbitron', sans-serif; color: #00fbff; font-size: 4vw; font-weight: 650; letter-spacing: 8px; text-transform: uppercase; margin: 0; text-shadow: 0 0 8px rgba(0, 251, 255, 0.9); }
+        .punto-cl { font-size: 3.5vw; opacity: 1; }
 
-        /* EL MOTOR DE VIDEO */
-        .video-fondo {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            z-index: 1;
-        }
-
-        .capa-fix { 
-            position: absolute; top: 0; left: 0; 
-            width: 100%; height: 100%; 
-            object-fit: cover; 
-            pointer-events: none; 
-        }
-
-        .capa-operador { 
-            position: absolute; top: 0; left: -30%; 
-            width: 100%; height: 100%; 
-            object-fit: cover; z-index: 2; opacity: 0; 
-            transition: all 0.5s ease-in-out; pointer-events: none;
-        }
-
-        .capa-mail { 
-            position: absolute; top: 0; left: 0; 
-            width: 100%; height: 100%; 
-            object-fit: cover; z-index: 6; cursor: pointer; pointer-events: auto;
-        }
-
-        .btn-trigger {
-            position: absolute; left: 30px; top: 40%;
-            width: 220px; height: 60px; z-index: 10; 
-            cursor: pointer; border-left: 3px solid #017b9e;
-            background: rgba(1, 123, 158, 0.05);
-            display: flex; align-items: center; padding-left: 15px;
-            color: #017b9e; font-family: 'Orbitron', sans-serif;
-            font-size: 11px; text-transform: uppercase; letter-spacing: 2px;
-            transition: 0.3s;
-        }
-
+        /* --- MENÚ LATERAL --- */
+        .menu-lateral { position: absolute; left: 30px; top: 35%; z-index: 20; display: flex; flex-direction: column; gap: 15px; }
+        .btn-trigger { width: 220px; height: 55px; cursor: pointer; border-left: 3px solid #017b9e; background: rgba(1, 123, 158, 0.05); display: flex; align-items: center; padding-left: 15px; color: #017b9e; font-family: 'Orbitron', sans-serif; font-size: 10px; text-transform: uppercase; letter-spacing: 2px; transition: 0.3s; }
         .btn-trigger:hover { background: rgba(1, 123, 158, 0.15); color: #00ffff; border-left: 3px solid #00ffff; }
-        .btn-trigger:hover ~ .capa-operador { left: -10%; opacity: 1; }
+        .menu-lateral:hover ~ .capa-operador { left: -10%; opacity: 1; }
 
-        .z3 { z-index: 3; } .z4 { z-index: 4; } .z5 { z-index: 5; }
-  .contact-container {
-    position: relative;
-    z-index: 100; /* Asegura que esté por encima del video pero no cubra todo */
-    text-align: center; /* O la posición que prefieras */
-    margin-top: 20px;
-}
+        /* --- HUD CRT Y EFECTOS --- */
+        .blur-active { filter: blur(6px) brightness(0.5); }
 
-.email {
-    display: inline-block;
-    position: fixed;    /* ANCLA el botón a la pantalla */
-    bottom: 60px;       /* Lo separa 30px del borde de abajo */
-    left: 50%;
-    transform: translateX(-50%); /* Centrado horizontal exacto */
-    z-index: 99999;     /* Lo pone por delante de TODOS los layers */
-    color: #00ffff !important; /* Fuerza el color Cyan */
-    font-family: 'Orbitron', sans-serif;
-    text-decoration: none;
-    font-size: 0.8rem;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    text-shadow: 0 0 10px #00ffff;
-    transition: 0.3s;
-    background: rgba(0, 0, 0, 0.5); /* Fondo semitransparente para legibilidad */
-    padding: 10px 20px;
-    border-radius: 5px;
-}
+        .teatro-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.7); display: none; justify-content: center; align-items: center; z-index: 10000;
+            backdrop-filter: blur(4px);
+        }
 
-.email:hover {
-    color: white;
-    text-shadow: 0 0 15px #00ffff, 0 0 20px #00ffff;
-}
+        /* Apertura Estilo CRT */
+        .contenedor-video-pro {
+            width: 80%; max-width: 1100px; aspect-ratio: 16/9;
+            position: relative; background: #000;
+            border: 1px solid rgba(0, 255, 255, 0.2);
+            transform: scaleX(0) scaleY(0.005);
+            transition: transform 0.5s cubic-bezier(0.23, 1, 0.32, 1), opacity 0.3s;
+            opacity: 0; overflow: hidden;
+        }
 
-.capa-mail {
-    display: block;
-    width: 100%;           /* O el ancho que necesites para la imagen 11.png */
-    max-width: 300px;
-    margin: 10px auto;
-}
+        .contenedor-video-pro.abierto { transform: scaleX(1) scaleY(1); opacity: 1; }
+
+        /* Capa de Scanlines */
+        .scanlines {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.15) 50%),
+                        linear-gradient(90deg, rgba(255, 0, 0, 0.03), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.03));
+            background-size: 100% 3px, 3px 100%; pointer-events: none; z-index: 10;
+        }
+
+        #reproductorDrive { width: 100%; height: 100%; border: none; opacity: 0.85; /* Transparencia media */ }
+
+        .cerrar-video { position: absolute; top: -45px; right: 0; color: #00ffff; font-family: 'Orbitron'; font-size: 14px; cursor: pointer; letter-spacing: 2px; }
+
+        /* CONTACTO */
+        .email { position: fixed; bottom: 40px; left: 50%; transform: translateX(-50%); z-index: 999; color: #00ffff; font-family: 'Orbitron'; text-decoration: none; font-size: 0.7rem; letter-spacing: 3px; text-align: center; }
     </style>
 </head>
 <body>
 
-    <div class="main-container">
-        <div class="btn-trigger">SERVICIO STREAMING PROFESIONAL</div>
+    <div class="main-container" id="escena">
+        <div class="menu-lateral">
+            <div class="btn-trigger">SERVICIO STREAMING PROFESIONAL</div>
+            <div class="btn-trigger" onclick="verVideo()">NUESTROS SERVICIOS (VER VIDEO)</div>
+            <div class="btn-trigger" onclick="location.href='contacto.html'">CONTACTO DIRECTO</div>
+            <div class="btn-trigger">PROYECTOS 3D / VR</div>
+        </div>
 
-        <!-- VIDEO BACKGROUND BLINDADO -->
         <video autoplay muted loop playsinline class="video-fondo">
             <source src="./Plexus_BG.mp4" type="video/mp4">
-            Tu navegador no soporta video.
         </video>
 
-        <!-- TU FOTO DINÁMICA -->
         <img src="8.png" class="capa-operador">
-
-        <!-- ASSETS ESTÁTICOS -->
         <img src="9.png" class="capa-fix z3">
         <img src="10.png" class="capa-fix z4">
+
         <div class="logo-contenedor">
-    <h1 class="logo-principal">MUNDOPARALELO<span class="punto-cl">.CL</span></h1>
-</div>
+            <h1 class="logo-principal">MUNDOPARALELO<span class="punto-cl">.CL</span></h1>
+        </div>
 
-       <!-- CONTACTO -->
-<div class="contact-container"> 
-    <a href="contacto.html" class="email">
-        contacto@mundoparalelo.cl
-        <img src="11.png" class="capa-mail">
-    </a>
-</div>
+        <a href="contacto.html" class="email">
+            CONTACTO@MUNDOPARALELO.CL
+            <img src="11.png" style="display:block; width:200px; margin: 10px auto;">
+        </a>
+    </div>
 
+    <div id="videoTeatro" class="teatro-overlay">
+        <div class="contenedor-video-pro" id="hubContainer">
+            <div class="scanlines"></div>
+            <span class="cerrar-video" onclick="cerrarVideo()">[ X ] CERRAR INTERFAZ</span>
+            <iframe id="reproductorDrive" src="" allow="autoplay"></iframe>
+        </div>
+    </div>
+
+    <script>
+        function verVideo() {
+            const teatro = document.getElementById('videoTeatro');
+            const hub = document.getElementById('hubContainer');
+            const escena = document.getElementById('escena');
+            const iframe = document.getElementById('reproductorDrive');
+
+            teatro.style.display = 'flex';
+            escena.classList.add('blur-active');
+
+            // Efecto de encendido CRT
+            setTimeout(() => {
+                hub.classList.add('abierto');
+                // URL directa sin llaves para evitar el error 404
+                iframe.src = "https://drive.google.com/file/d/15qVZc8Don4ger6RPv060hzCI_fnF7fut/preview";
+            }, 100);
+        }
+
+        function cerrarVideo() {
+            const teatro = document.getElementById('videoTeatro');
+            const hub = document.getElementById('hubContainer');
+            const escena = document.getElementById('escena');
+            const iframe = document.getElementById('reproductorDrive');
+
+            hub.classList.remove('abierto');
+            escena.classList.remove('blur-active');
+            
+            setTimeout(() => {
+                teatro.style.display = 'none';
+                iframe.src = "";
+            }, 500);
+        }
+    </script>
 </body>
 </html>
