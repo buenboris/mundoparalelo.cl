@@ -6,9 +6,9 @@
     <title>MundoParalelo | Servicios Audiovisuales</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        /* --- ESTILOS BASE (TU DEFAULT) --- */
+        /* --- BASE DEFAULT MANTENIDA --- */
         body, html { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background-color: #000; }
-        .main-container { position: relative; width: 100vw; height: 100vh; transition: 0.5s; }
+        .main-container { position: relative; width: 100vw; height: 100vh; transition: 0.6s ease-in-out; }
         .video-fondo { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: 1; }
         .capa-fix { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; pointer-events: none; }
         .capa-operador { position: absolute; top: 0; left: -30%; width: 100%; height: 100%; object-fit: cover; z-index: 2; opacity: 0; transition: all 0.5s ease-in-out; pointer-events: none; }
@@ -16,7 +16,6 @@
         
         .logo-contenedor { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 100%; text-align: center; z-index: 5; }
         .logo-principal { font-family: 'Orbitron', sans-serif; color: #00fbff; font-size: 4vw; font-weight: 650; letter-spacing: 8px; text-transform: uppercase; margin: 0; text-shadow: 0 0 8px rgba(0, 251, 255, 0.9); }
-        .punto-cl { font-size: 3.5vw; opacity: 1; }
 
         /* --- MENÚ LATERAL --- */
         .menu-lateral { position: absolute; left: 30px; top: 35%; z-index: 20; display: flex; flex-direction: column; gap: 15px; }
@@ -24,38 +23,38 @@
         .btn-trigger:hover { background: rgba(1, 123, 158, 0.15); color: #00ffff; border-left: 3px solid #00ffff; }
         .menu-lateral:hover ~ .capa-operador { left: -10%; opacity: 1; }
 
-        /* --- HUD CRT Y EFECTOS --- */
-        .blur-active { filter: blur(6px) brightness(0.5); }
+        /* --- EFECTOS HUD CRT --- */
+        .blur-active { filter: blur(5px) brightness(0.4); }
 
         .teatro-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.7); display: none; justify-content: center; align-items: center; z-index: 10000;
-            backdrop-filter: blur(4px);
+            background: rgba(0, 0, 0, 0.75); display: none; justify-content: center; align-items: center; z-index: 10000;
+            backdrop-filter: blur(3px);
         }
 
-        /* Apertura Estilo CRT */
         .contenedor-video-pro {
-            width: 80%; max-width: 1100px; aspect-ratio: 16/9;
+            width: 85%; max-width: 1100px; aspect-ratio: 16/9;
             position: relative; background: #000;
-            border: 1px solid rgba(0, 255, 255, 0.2);
-            transform: scaleX(0) scaleY(0.005);
-            transition: transform 0.5s cubic-bezier(0.23, 1, 0.32, 1), opacity 0.3s;
-            opacity: 0; overflow: hidden;
+            border: 1px solid rgba(0, 255, 255, 0.3);
+            /* Animación de apertura CRT */
+            transform: scaleX(0) scaleY(0.002);
+            transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.3s;
+            opacity: 0; overflow: hidden; box-shadow: 0 0 30px rgba(0, 255, 255, 0.1);
         }
 
         .contenedor-video-pro.abierto { transform: scaleX(1) scaleY(1); opacity: 1; }
 
-        /* Capa de Scanlines */
+        /* Capa de Scanlines Retro */
         .scanlines {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.15) 50%),
-                        linear-gradient(90deg, rgba(255, 0, 0, 0.03), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.03));
-            background-size: 100% 3px, 3px 100%; pointer-events: none; z-index: 10;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.1) 50%),
+                        linear-gradient(90deg, rgba(255, 0, 0, 0.02), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.02));
+            background-size: 100% 4px, 3px 100%; pointer-events: none; z-index: 10;
         }
 
-        #reproductorDrive { width: 100%; height: 100%; border: none; opacity: 0.85; /* Transparencia media */ }
+        #reproductorDrive { width: 100%; height: 100%; border: none; opacity: 0.9; }
 
-        .cerrar-video { position: absolute; top: -45px; right: 0; color: #00ffff; font-family: 'Orbitron'; font-size: 14px; cursor: pointer; letter-spacing: 2px; }
+        .cerrar-video { position: absolute; top: -40px; right: 0; color: #00ffff; font-family: 'Orbitron'; font-size: 12px; cursor: pointer; letter-spacing: 2px; text-shadow: 0 0 5px #00ffff; }
 
         /* CONTACTO */
         .email { position: fixed; bottom: 40px; left: 50%; transform: translateX(-50%); z-index: 999; color: #00ffff; font-family: 'Orbitron'; text-decoration: none; font-size: 0.7rem; letter-spacing: 3px; text-align: center; }
@@ -80,7 +79,7 @@
         <img src="10.png" class="capa-fix z4">
 
         <div class="logo-contenedor">
-            <h1 class="logo-principal">MUNDOPARALELO<span class="punto-cl">.CL</span></h1>
+            <h1 class="logo-principal">MUNDOPARALELO<span style="font-size:3.5vw">.CL</span></h1>
         </div>
 
         <a href="contacto.html" class="email">
@@ -92,7 +91,7 @@
     <div id="videoTeatro" class="teatro-overlay">
         <div class="contenedor-video-pro" id="hubContainer">
             <div class="scanlines"></div>
-            <span class="cerrar-video" onclick="cerrarVideo()">[ X ] CERRAR INTERFAZ</span>
+            <span class="cerrar-video" onclick="cerrarVideo()">TERMINAR_SESION [X]</span>
             <iframe id="reproductorDrive" src="" allow="autoplay"></iframe>
         </div>
     </div>
@@ -107,10 +106,9 @@
             teatro.style.display = 'flex';
             escena.classList.add('blur-active');
 
-            // Efecto de encendido CRT
             setTimeout(() => {
                 hub.classList.add('abierto');
-                // URL directa sin llaves para evitar el error 404
+                // URL corregida con el ID que me pasaste
                 iframe.src = "https://drive.google.com/file/d/15qVZc8Don4ger6RPv060hzCI_fnF7fut/preview";
             }, 100);
         }
@@ -127,7 +125,7 @@
             setTimeout(() => {
                 teatro.style.display = 'none';
                 iframe.src = "";
-            }, 500);
+            }, 400);
         }
     </script>
 </body>
