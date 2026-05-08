@@ -95,6 +95,60 @@
             .menu-lateral { left: 10px; top: 55%; }
             .btn-trigger { width: 220px; font-size: 9px; }
         }
+   /* Desenfoque de la página */
+.blur-active {
+    filter: blur(8px);
+    transition: filter 0.5s ease;
+}
+
+/* Contenedor principal del Teatro */
+.teatro-overlay {
+    display: none;
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    z-index: 10000;
+    background: rgba(0, 0, 0, 0.4);
+    align-items: center;
+    justify-content: center;
+}
+
+/* El Rayo Calipso (Efecto TV Antigua) */
+.rayo-calipso {
+    position: absolute;
+    width: 0%; height: 2px;
+    background: #00fbff;
+    box-shadow: 0 0 15px #00fbff, 0 0 30px #00fbff;
+    transition: width 0.4s ease, height 0.3s 0.4s ease;
+}
+
+.rayo-active {
+    width: 100% !important;
+    height: 85% !important; /* El 85% que pediste */
+}
+
+/* Contenedor del Video */
+.contenedor-video-pro {
+    position: relative;
+    width: 80%; height: 80%;
+    opacity: 0;
+    transition: opacity 0.5s 0.7s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#reproductorDrive {
+    width: 100%; height: 100%;
+    border: 1px solid rgba(0, 251, 255, 0.3);
+    opacity: 0.85; /* Tu opacidad del 85% */
+}
+
+.cerrar-video {
+    position: absolute; top: -40px; right: 0;
+    color: #00fbff; font-size: 40px; cursor: pointer;
+    text-shadow: 0 0 10px #00fbff;
+}
     </style>
 </head>
 <body>
@@ -105,20 +159,15 @@
         </video>
 
         <div class="menu-lateral">
-            <div class="btn-trigger">SERVICIO STREAMING PROFESIONAL</div>
-            
-            <div class="btn-trigger" onclick="window.location.href='#contacto'">
-                CONTACTO DIRECTO
-            </div>
-            
-            <div class="btn-trigger" onclick="window.open('https://drive.google.com/file/d/15qVZc8Don4gEr6RPv060hzCI_fnF7fut/view?usp=drive_link', '_blank')">
-                NUESTROS SERVICIOS (VER VIDEO)
-            </div>
+    <div class="btn-trigger">SERVICIO STREAMING PROFESIONAL</div>
+    <div class="btn-trigger" onclick="window.location.href='#contacto'">CONTACTO DIRECTO</div>
+    
+    <div class="btn-trigger" onclick="verVideo()">
+        NUESTROS SERVICIOS (VER VIDEO)
+    </div>
 
-            <div class="btn-trigger" onclick="window.location.href='#portafolio'">
-                PROYECTOS 3D / VR
-            </div>
-        </div>
+    <div class="btn-trigger" onclick="window.location.href='#portafolio'">PROYECTOS 3D / VR</div>
+</div>
 
         <img src="8.png" class="capa-operador">
         <img src="9.png" class="capa-fix z3">
@@ -130,6 +179,53 @@
 
         <a href="contacto.html" class="email">contacto@mundoparalelo.cl</a>
     </div>
+<div id="videoTeatro" class="teatro-overlay">
+    <div class="rayo-calipso"></div>
+    <div class="contenedor-video-pro">
+        <span class="cerrar-video" onclick="terminarEfecto()">&times;</span>
+        <iframe id="reproductorDrive" src="" frameborder="0" allow="autoplay"></iframe>
+    </div>
+</div>
+    function verVideo() {
+    const idVideo = "15qVZc8Don4ger6RPv060hzCI_fnF7fut"; // Tu ID de Drive [cite: 43]
+    const teatro = document.getElementById('videoTeatro');
+    const rayo = teatro.querySelector('.rayo-calipso');
+    const videoCont = teatro.querySelector('.contenedor-video-pro');
+    const main = document.querySelector('.main-container');
 
+    // 1. Activar teatro y desenfoque
+    teatro.style.display = 'flex';
+    main.classList.add('blur-active');
+
+    // 2. Disparar rayo calipso
+    setTimeout(() => {
+        rayo.classList.add('rayo-active');
+    }, 100);
+
+    // 3. Mostrar video
+    setTimeout(() => {
+        document.getElementById('reproductorDrive').src = `https://drive.google.com/file/d/${idVideo}/preview`; [cite: 42]
+        videoCont.style.opacity = '1';
+    }, 800);
+}
+
+function terminarEfecto() {
+    const teatro = document.getElementById('videoTeatro');
+    const rayo = teatro.querySelector('.rayo-calipso');
+    const videoCont = teatro.querySelector('.contenedor-video-pro');
+    const main = document.querySelector('.main-container');
+
+    videoCont.style.opacity = '0';
+    
+    setTimeout(() => {
+        rayo.classList.remove('rayo-active');
+        document.getElementById('reproductorDrive').src = "";
+    }, 300);
+
+    setTimeout(() => {
+        teatro.style.display = 'none';
+        main.classList.remove('blur-active');
+    }, 800);
+}
 </body>
 </html>
