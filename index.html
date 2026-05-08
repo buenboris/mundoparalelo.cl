@@ -6,59 +6,144 @@
     <title>MundoParalelo | Servicios Audiovisuales</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        /* [ESTILOS BASE MANTENIDOS] */
-        body, html { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background-color: #000; }
-        .main-container { position: relative; width: 100vw; height: 100vh; transition: filter 0.5s ease; }
-        .video-fondo { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: 1; }
+        body, html { 
+            margin: 0; padding: 0; 
+            width: 100%; height: 100%; 
+            overflow: hidden; background-color: #000;
+            font-family: 'Orbitron', sans-serif;
+        }
         
-        /* EFECTO BLUR PARA EL FONDO */
-        .blur-active { filter: blur(10px); }
+        .main-container { 
+            position: relative;
+            width: 100vw; height: 100vh; 
+            transition: filter 0.5s ease;
+        }
 
-        /* MENÚ LATERAL ACTUALIZADO */
+        /* EFECTO DE DESENFOQUE CUANDO SE VE EL VIDEO */
+        .blur-active { filter: blur(10px) brightness(0.4); }
+
+        /* VIDEO DE FONDO (PLEXUS) */
+        .video-fondo {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            object-fit: cover;
+            z-index: 1;
+        }
+
+        /* CAPAS DE DISEÑO */
+        .capa-fix { 
+            position: absolute;
+            top: 0; left: 0; 
+            width: 100%; height: 100%; 
+            object-fit: cover; 
+            pointer-events: none;
+        }
+
+        /* LA FOTO DEL OPERADOR (8.png) */
+        .capa-operador { 
+            position: absolute;
+            top: 0; left: -25%; 
+            width: 100%; height: 100%; 
+            object-fit: cover; z-index: 2; opacity: 0; 
+            transition: all 0.6s ease-in-out; pointer-events: none;
+        }
+
+        /* MENÚ LATERAL */
         .menu-lateral {
-            position: absolute; left: 30px; top: 40%;
-            display: flex; flex-direction: column; gap: 10px; z-index: 100;
+            position: absolute;
+            left: 40px; top: 35%;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            z-index: 10;
         }
 
         .btn-trigger {
-            width: 280px; height: 50px; cursor: pointer; border-left: 3px solid #017b9e;
-            background: rgba(1, 123, 158, 0.05); display: flex; align-items: center;
-            padding-left: 15px; color: #017b9e; font-family: 'Orbitron', sans-serif;
-            font-size: 11px; text-transform: uppercase; letter-spacing: 2px; transition: 0.3s;
+            width: 260px; height: 55px; 
+            cursor: pointer; border-left: 3px solid #017b9e;
+            background: rgba(1, 123, 158, 0.08);
+            display: flex; align-items: center; padding-left: 20px;
+            color: #017b9e; font-size: 11px; text-transform: uppercase;
+            letter-spacing: 2px; transition: 0.3s;
         }
 
-        .btn-trigger:hover { background: rgba(1, 123, 158, 0.15); color: #00ffff; border-left: 3px solid #00ffff; padding-left: 25px; }
+        .btn-trigger:hover { 
+            background: rgba(1, 123, 158, 0.2);
+            color: #00ffff; border-left: 3px solid #00ffff; 
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.15);
+        }
+
+        /* ACTIVAR FOTO OPERADOR AL PASAR POR EL MENÚ */
+        .menu-lateral:hover ~ .capa-operador { 
+            left: -5%; 
+            opacity: 1; 
+        }
+
+        /* LOGO MUNDOPARALELO */
+        .logo-contenedor {
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            width: 100%; text-align: center;
+            z-index: 5; pointer-events: none;
+        }
+
+        .logo-principal {
+            color: #00fbff; font-size: 4.2vw; font-weight: 700;
+            letter-spacing: 10px; text-transform: uppercase;
+            text-shadow: 0 0 12px rgba(0, 251, 255, 0.8), 0 0 45px rgba(0, 251, 255, 0.3);
+        }
+
+        /* BOTÓN DE CONTACTO (MAIL) */
+        .email-btn {
+            position: fixed; bottom: 40px; left: 50%;
+            transform: translateX(-50%); z-index: 100;
+            color: #00ffff; text-decoration: none; font-size: 0.85rem;
+            letter-spacing: 4px; text-transform: uppercase;
+            text-shadow: 0 0 15px #00ffff; transition: 0.4s;
+            background: rgba(0, 0, 0, 0.7); 
+            padding: 12px 25px; border: 1px solid rgba(0, 255, 255, 0.2);
+            border-radius: 4px;
+        }
+        
+        .email-btn:hover { 
+            color: white; 
+            background: rgba(0, 255, 255, 0.1);
+            text-shadow: 0 0 25px #00ffff; 
+        }
 
         /* SISTEMA DE TEATRO CRT */
-        #videoTeatro {
-            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            z-index: 10000; background: rgba(0, 0, 0, 0.3); align-items: center; justify-content: center;
+        .teatro-overlay {
+            position: fixed; top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0,0,0,0.85);
+            display: none; justify-content: center; align-items: center;
+            z-index: 10000;
         }
 
         .rayo-calipso {
-            position: absolute; width: 0%; height: 2px; background: #00fbff;
-            box-shadow: 0 0 15px #00fbff, 0 0 30px #00fbff;
-            transition: width 0.4s ease, height 0.3s 0.4s ease;
+            position: absolute; width: 0%; height: 2px;
+            background: #00ffff; box-shadow: 0 0 25px #00ffff;
+            transition: width 0.4s ease-in-out;
         }
 
-        .rayo-active { width: 100% !important; height: 85% !important; }
+        .rayo-active { width: 100%; }
 
         .contenedor-video-pro {
-            position: relative; width: 80%; height: 80%; opacity: 0;
-            transition: opacity 0.5s 0.7s ease; display: flex; align-items: center; justify-content: center;
+            width: 85%; max-width: 1100px; aspect-ratio: 16/9;
+            background: #000; border: 1px solid rgba(0, 255, 255, 0.3);
+            position: relative; opacity: 0; transition: opacity 0.6s;
         }
-
-        #reproductorDrive { width: 100%; height: 100%; border: 1px solid rgba(0, 251, 255, 0.2); opacity: 0.85; }
 
         .cerrar-video {
-            position: absolute; top: -40px; right: 0; color: #00fbff;
-            font-size: 40px; cursor: pointer; text-shadow: 0 0 10px #00fbff;
+            position: absolute; top: -50px; right: 0;
+            color: #00ffff; font-size: 35px; cursor: pointer;
+            text-shadow: 0 0 10px #00ffff;
         }
 
-        /* [RESTO DE TUS ESTILOS: LOGO Y CAPAS] */
-        .logo-contenedor { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 5; text-align: center; width: 100%; }
-        .logo-principal { font-family: 'Orbitron', sans-serif; color: #00fbff; font-size: 4vw; letter-spacing: 8px; text-transform: uppercase; text-shadow: 0 0 8px rgba(0, 251, 255, 0.9); }
-        .capa-fix { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; pointer-events: none; }
+        iframe { width: 100%; height: 100%; border: none; }
+
         .z3 { z-index: 3; } .z4 { z-index: 4; }
     </style>
 </head>
@@ -69,36 +154,39 @@
             <source src="./Plexus_BG.mp4" type="video/mp4">
         </video>
 
-        <div class="menu-lateral">
-            <div class="btn-trigger">SERVICIO STREAMING PROFESIONAL</div>
-            <div class="btn-trigger" onclick="window.location.href='#contacto'">CONTACTO DIRECTO</div>
-            
-            <div class="btn-trigger" onclick="verVideo()">
-                NUESTROS SERVICIOS (VER VIDEO)
-            </div>
-
-            <div class="btn-trigger" onclick="window.location.href='#portafolio'">PROYECTOS 3D / VR</div>
-        </div>
-
         <img src="9.png" class="capa-fix z3">
         <img src="10.png" class="capa-fix z4">
         
-        <div class="logo-contenedor">
-            <h1 class="logo-principal">MUNDOPARALELO<span class="punto-cl">.CL</span></h1>
+        <img src="8.png" class="capa-operador">
+
+        <div class="menu-lateral">
+            <div class="btn-trigger">SERVICIO STREAMING PROFESIONAL</div>
+            <div class="btn-trigger" onclick="verVideo()">NUESTROS SERVICIOS (VER VIDEO)</div>
+            <div class="btn-trigger" onclick="window.location.href='#portafolio'">PROYECTOS 3D / VR</div>
+            <div class="btn-trigger" onclick="window.location.href='contacto.html'">CONTACTO DIRECTO</div>
         </div>
+
+        <div class="logo-contenedor">
+            <h1 class="logo-principal">MUNDOPARALELO<span style="font-size: 3.5vw;">.CL</span></h1>
+        </div>
+
+        <a href="mailto:contacto@mundoparalelo.cl" class="email-btn">
+            contacto@mundoparalelo.cl
+        </a>
     </div>
 
-    <div id="videoTeatro">
+    <div id="videoTeatro" class="teatro-overlay">
         <div class="rayo-calipso"></div>
         <div class="contenedor-video-pro">
             <span class="cerrar-video" onclick="terminarEfecto()">&times;</span>
-            <iframe id="reproductorDrive" src="" frameborder="0" allow="autoplay"></iframe>
+            <iframe id="reproductorVideo" src="" allow="autoplay"></iframe>
         </div>
     </div>
 
     <script>
         function verVideo() {
-            const idVideo = "15qVZc8Don4ger6RPv060hzCI_fnF7fut"; // Tu ID de Drive 
+            // Usa el ID de YouTube o el de Drive compartido
+            const idVideo = "15qVZc8Don4ger6RPv060hzCI_fnF7fut"; 
             const teatro = document.getElementById('videoTeatro');
             const rayo = teatro.querySelector('.rayo-calipso');
             const videoCont = teatro.querySelector('.contenedor-video-pro');
@@ -110,28 +198,20 @@
             setTimeout(() => { rayo.classList.add('rayo-active'); }, 100);
 
             setTimeout(() => {
-document.getElementById('reproductorDrive').src = `https://drive.google.com/file/d/${idVideo}/preview`;
+                // Ajustado para previsualización de Drive
+                document.getElementById('reproductorVideo').src = `https://drive.google.com/file/d/${idVideo}/preview`;
                 videoCont.style.opacity = '1';
             }, 800);
         }
 
         function terminarEfecto() {
             const teatro = document.getElementById('videoTeatro');
-            const rayo = teatro.querySelector('.rayo-calipso');
-            const videoCont = teatro.querySelector('.contenedor-video-pro');
             const content = document.getElementById('content');
-
-            videoCont.style.opacity = '0';
-            
-            setTimeout(() => {
-                rayo.classList.remove('rayo-active');
-                document.getElementById('reproductorDrive').src = "";
-            }, 300);
-
-            setTimeout(() => {
-                teatro.style.display = 'none';
-                content.classList.remove('blur-active');
-            }, 800);
+            document.getElementById('reproductorVideo').src = "";
+            teatro.style.display = 'none';
+            content.classList.remove('blur-active');
+            teatro.querySelector('.rayo-calipso').classList.remove('rayo-active');
+            teatro.querySelector('.contenedor-video-pro').style.opacity = '0';
         }
     </script>
 </body>
