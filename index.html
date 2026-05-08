@@ -156,6 +156,36 @@
     max-width: 300px;
     margin: 10px auto;
 }
+   .contenedor-botones {
+    position: absolute;
+    top: 62%;           /* Esto los empuja hacia abajo del logo central */
+    left: 50%;
+    transform: translateX(-50%); /* Los centra horizontalmente de forma perfecta */
+    display: flex;
+    flex-direction: column;
+    gap: 12px;          /* Espacio entre los dos botones */
+    z-index: 100;       /* Valor alto para que NADA los tape y el click funcione */
+}
+
+.boton-tech {
+    background: rgba(0, 0, 0, 0.7); /* Fondo oscuro para que resalte el texto neón */
+    border: 1px solid #00fbff;
+    color: #00fbff;
+    padding: 10px 25px;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 0.8vw;   /* Tamaño equilibrado para desktop */
+    letter-spacing: 2px;
+    cursor: pointer;
+    width: 320px;       /* Ancho fijo para que ambos botones sean iguales */
+    transition: 0.3s;
+    text-transform: uppercase;
+}
+
+.boton-tech:hover {
+    background: #00fbff;
+    color: #000;
+    box-shadow: 0 0 15px #00fbff;
+}
     </style>
 </head>
 <body>
@@ -168,7 +198,15 @@
             <source src="./Plexus_BG.mp4" type="video/mp4">
             Tu navegador no soporta video.
         </video>
+        <div class="contenedor-botones">
+    <button onclick="window.location.href='#contacto'" class="boton-tech">
+        CONTACTO DIRECTO
+    </button>
 
+    <button onclick="window.open('https://drive.google.com/file/d/15qVZc8Don4gEr6RPv060hzCI_fnF7fut/view?usp=sharing', '_blank')" class="boton-tech">
+        NUESTROS SERVICIOS (VER VIDEO)
+    </button>
+</div>
         <!-- TU FOTO DINÁMICA -->
         <img src="8.png" class="capa-operador">
 
@@ -178,6 +216,8 @@
         <div class="logo-contenedor">
     <h1 class="logo-principal">MUNDOPARALELO<span class="punto-cl">.CL</span></h1>
 </div>
+
+
 
        <!-- CONTACTO -->
 <div class="contact-container"> 
