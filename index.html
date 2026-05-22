@@ -6,7 +6,7 @@
     <title>MundoParalelo | Servicios Audiovisuales</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        /* --- ESTILOS BASE INTACTOS --- */
+        /* --- ESTILOS BASE INTACTOS DE TU DEFAULT --- */
         body, html { 
             margin: 0; padding: 0; 
             width: 100%; height: 100%; 
@@ -24,7 +24,7 @@
         .capa-operador { position: absolute; top: 0; left: -30%; width: 100%; height: 100%; object-fit: cover; z-index: 2; opacity: 0; transition: all 0.5s ease-in-out; pointer-events: none; }
         .z3 { z-index: 3; } .z4 { z-index: 4; } .z5 { z-index: 5; }
 
-        /* --- MENÚ LATERAL RESTAURADO Y CORREGIDO --- */
+        /* --- MENÚ LATERAL COMPLETO --- */
         .menu-lateral { 
             position: absolute; 
             left: 30px; 
@@ -45,7 +45,6 @@
             transition: 0.3s;
         }
         .btn-trigger:hover { background: rgba(1, 123, 158, 0.15); color: #00ffff; border-left: 3px solid #00ffff; }
-        /* Mantiene el trigger de la foto del operador al pasar el mouse sobre el menú entero */
         .menu-lateral:hover ~ .capa-operador { left: -10%; opacity: 1; }
 
         .contact-container { position: relative; z-index: 100; text-align: center; margin-top: 20px; }
@@ -53,14 +52,14 @@
         .email:hover { color: white; text-shadow: 0 0 15px #00ffff, 0 0 20px #00ffff; }
         .capa-mail { display: block; width: 100%; max-width: 300px; margin: 10px auto; }
 
-        /* --- INTERFAZ HUD CRT --- */
+        /* --- INTERFAZ INTERNA HUD CRT --- */
         .blur-active { filter: blur(5px) brightness(0.4); } 
 
         .teatro-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0, 0, 0, 0.75); 
             display: none; flex-direction: column; justify-content: center; align-items: center; z-index: 10000;
-            backdrop-filter: blur(3px); gap: 20px; /* Separación entre el reproductor y el botón de cierre */
+            backdrop-filter: blur(3px); gap: 20px; 
         }
 
         .contenedor-video-pro {
@@ -82,7 +81,6 @@
 
         #reproductorDrive { width: 100%; height: 100%; border: none; opacity: 0.92; }
 
-        /* NUEBO BOTÓN DE RETORNO DESTACADO ABAJO */
         .boton-retorno-hud {
             font-family: 'Orbitron', sans-serif;
             color: #00ffff;
@@ -165,8 +163,8 @@
 
             setTimeout(() => {
                 hub.classList.add('abierto');
-                // Carga limpia en Drive Preview
-                iframe.src = "https://drive.google.com/file/d/15qVZc8Don4gEr6RPv060hzCI_fnF7fut/preview";
+                // MODIFICACIÓN DE REPRODUCCIÓN AUTOMÁTICA: Parámetro autoplay=1 inyectado directamente
+                iframe.src = "https://drive.google.com/file/d/15qVZc8Don4gEr6RPv060hzCI_fnF7fut/preview?autoplay=1";
             }, 100);
         }
 
@@ -181,7 +179,7 @@
             
             setTimeout(() => {
                 teatro.style.display = 'none';
-                iframe.src = ""; // Apaga el video y audio inmediatamente
+                iframe.src = ""; 
             }, 400);
         }
     </script>
