@@ -6,7 +6,7 @@
     <title>MundoParalelo | Servicios Audiovisuales</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        /* --- BASE DEFAULT MANTENIDA --- */
+        /* --- BASE DEFAULT INTEGRAL --- */
         body, html { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background-color: #000; }
         .main-container { position: relative; width: 100vw; height: 100vh; transition: 0.6s ease-in-out; }
         .video-fondo { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: 1; }
@@ -15,84 +15,96 @@
         .z3 { z-index: 3; } .z4 { z-index: 4; }
         
         .logo-contenedor { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 100%; text-align: center; z-index: 5; }
-        .logo-principal { font-family: 'Orbitron', sans-serif; color: #00fbff; font-size: 4vw; font-weight: 650; letter-spacing: 8px; text-transform: uppercase; margin: 0; text-shadow: 0 0 8px rgba(0, 251, 255, 0.9); }
+        .logo-principal { font-family: 'Orbitron', sans-serif; color: #00fbff; font-size: 4vw; font-weight: 650; letter-spacing: 8px; text-transform: uppercase; margin: 0; text-shadow: 0 0 8px rgba(0, 251, 255, 0.9), 0 0 15px rgba(0, 251, 255, 0.5); white-space: nowrap; cursor: default; user-select: none; }
+        .punto-cl { font-size: 3.5vw; opacity: 1; }
 
-        /* --- MENÚ LATERAL --- */
-        .menu-lateral { position: absolute; left: 30px; top: 35%; z-index: 20; display: flex; flex-direction: column; gap: 15px; }
-        .btn-trigger { width: 220px; height: 55px; cursor: pointer; border-left: 3px solid #017b9e; background: rgba(1, 123, 158, 0.05); display: flex; align-items: center; padding-left: 15px; color: #017b9e; font-family: 'Orbitron', sans-serif; font-size: 10px; text-transform: uppercase; letter-spacing: 2px; transition: 0.3s; }
+        /* --- BOTÓN INDIVIDUAL ORIGINAL --- */
+        .btn-trigger {
+            position: absolute; left: 30px; top: 40%;
+            width: 220px; height: 60px; z-index: 10; 
+            cursor: pointer; border-left: 3px solid #017b9e;
+            background: rgba(1, 123, 158, 0.05);
+            display: flex; align-items: center; padding-left: 15px;
+            color: #017b9e; font-family: 'Orbitron', sans-serif;
+            font-size: 11px; text-transform: uppercase; letter-spacing: 2px;
+            transition: 0.3s;
+        }
         .btn-trigger:hover { background: rgba(1, 123, 158, 0.15); color: #00ffff; border-left: 3px solid #00ffff; }
-        .menu-lateral:hover ~ .capa-operador { left: -10%; opacity: 1; }
+        .btn-trigger:hover ~ .capa-operador { left: -10%; opacity: 1; }
 
-        /* --- EFECTOS HUD CRT --- */
+        /* --- SISTEMA HUD CRT --- */
         .blur-active { filter: blur(5px) brightness(0.4); }
 
         .teatro-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0, 0, 0, 0.75); display: none; justify-content: center; align-items: center; z-index: 10000;
-            backdrop-filter: blur(3px);
+            backdrop-filter: blur(4px); /* Blur sutil y controlado al fondo */
         }
 
         .contenedor-video-pro {
             width: 85%; max-width: 1100px; aspect-ratio: 16/9;
             position: relative; background: #000;
             border: 1px solid rgba(0, 255, 255, 0.3);
-            /* Animación de apertura CRT */
+            /* Apertura estilo monitor CRT antiguo */
             transform: scaleX(0) scaleY(0.002);
-            transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.3s;
-            opacity: 0; overflow: hidden; box-shadow: 0 0 30px rgba(0, 255, 255, 0.1);
+            transition: transform 0.5s cubic-bezier(0.165, 0.84, 0.44, 1), opacity 0.3s;
+            opacity: 0; overflow: hidden; box-shadow: 0 0 30px rgba(0, 255, 255, 0.15);
         }
 
         .contenedor-video-pro.abierto { transform: scaleX(1) scaleY(1); opacity: 1; }
 
-        /* Capa de Scanlines Retro */
+        /* Textura de Scanlines de Monitor de Control */
         .scanlines {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.1) 50%),
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.12) 50%),
                         linear-gradient(90deg, rgba(255, 0, 0, 0.02), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.02));
             background-size: 100% 4px, 3px 100%; pointer-events: none; z-index: 10;
         }
 
-        #reproductorDrive { width: 100%; height: 100%; border: none; opacity: 0.9; }
+        /* Player con transparencia Alpha para dejar respirar el Plexus */
+        #reproductorYoutube { width: 100%; height: 100%; border: none; opacity: 0.90; }
 
         .cerrar-video { position: absolute; top: -40px; right: 0; color: #00ffff; font-family: 'Orbitron'; font-size: 12px; cursor: pointer; letter-spacing: 2px; text-shadow: 0 0 5px #00ffff; }
 
-        /* CONTACTO */
-        .email { position: fixed; bottom: 40px; left: 50%; transform: translateX(-50%); z-index: 999; color: #00ffff; font-family: 'Orbitron'; text-decoration: none; font-size: 0.7rem; letter-spacing: 3px; text-align: center; }
+        /* CONTACTO ORIGINAL */
+        .contact-container { position: relative; z-index: 100; text-align: center; margin-top: 20px; }
+        .email { display: inline-block; position: fixed; bottom: 60px; left: 50%; transform: translateX(-50%); z-index: 99999; color: #00ffff !important; font-family: 'Orbitron', sans-serif; text-decoration: none; font-size: 0.8rem; letter-spacing: 3px; text-transform: uppercase; text-shadow: 0 0 10px #00ffff; transition: 0.3s; background: rgba(0, 0, 0, 0.5); padding: 10px 20px; border-radius: 5px; }
+        .email:hover { color: white; text-shadow: 0 0 15px #00ffff, 0 0 20px #00ffff; }
+        .capa-mail { display: block; width: 100%; max-width: 300px; margin: 10px auto; }
     </style>
 </head>
 <body>
 
     <div class="main-container" id="escena">
-        <div class="menu-lateral">
-            <div class="btn-trigger">SERVICIO STREAMING PROFESIONAL</div>
-            <div class="btn-trigger" onclick="verVideo()">NUESTROS SERVICIOS (VER VIDEO)</div>
-            <div class="btn-trigger" onclick="location.href='contacto.html'">CONTACTO DIRECTO</div>
-            <div class="btn-trigger">PROYECTOS 3D / VR</div>
-        </div>
+        <div class="btn-trigger" onclick="verVideo()">SERVICIO STREAMING PROFESIONAL</div>
 
         <video autoplay muted loop playsinline class="video-fondo">
             <source src="./Plexus_BG.mp4" type="video/mp4">
+            Tu navegador no soporta video.
         </video>
 
         <img src="8.png" class="capa-operador">
+
         <img src="9.png" class="capa-fix z3">
         <img src="10.png" class="capa-fix z4">
-
+        
         <div class="logo-contenedor">
-            <h1 class="logo-principal">MUNDOPARALELO<span style="font-size:3.5vw">.CL</span></h1>
+            <h1 class="logo-principal">MUNDOPARALELO<span class="punto-cl">.CL</span></h1>
         </div>
 
-        <a href="contacto.html" class="email">
-            CONTACTO@MUNDOPARALELO.CL
-            <img src="11.png" style="display:block; width:200px; margin: 10px auto;">
-        </a>
+        <div class="contact-container"> 
+            <a href="contacto.html" class="email">
+                contacto@mundoparalelo.cl
+                <img src="11.png" class="capa-mail">
+            </a>
+        </div>
     </div>
 
     <div id="videoTeatro" class="teatro-overlay">
         <div class="contenedor-video-pro" id="hubContainer">
             <div class="scanlines"></div>
             <span class="cerrar-video" onclick="cerrarVideo()">TERMINAR_SESION [X]</span>
-            <iframe id="reproductorDrive" src="" allow="autoplay"></iframe>
+            <iframe id="reproductorYoutube" src="" allow="autoplay; encrypted-media" allowfullscreen></iframe>
         </div>
     </div>
 
@@ -101,15 +113,15 @@
             const teatro = document.getElementById('videoTeatro');
             const hub = document.getElementById('hubContainer');
             const escena = document.getElementById('escena');
-            const iframe = document.getElementById('reproductorDrive');
+            const iframe = document.getElementById('reproductorYoutube');
 
             teatro.style.display = 'flex';
             escena.classList.add('blur-active');
 
             setTimeout(() => {
                 hub.classList.add('abierto');
-                // URL corregida con el ID que me pasaste
-                iframe.src = "<iframe width="1436" height="813" src="https://www.youtube.com/embed/8lu7iV_DC88" title="Resultado visibilidad sobre pantalla ALR de fabricacion personal." frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>";
+                // Cargamos el stream usando la URL embebida oficial y limpia con autoplay activo
+                iframe.src = "https://www.youtube.com/embed/OnrjfmD3WpA?autoplay=1&rel=0&modestbranding=1";
             }, 100);
         }
 
@@ -117,14 +129,14 @@
             const teatro = document.getElementById('videoTeatro');
             const hub = document.getElementById('hubContainer');
             const escena = document.getElementById('escena');
-            const iframe = document.getElementById('reproductorDrive');
+            const iframe = document.getElementById('reproductorYoutube');
 
             hub.classList.remove('abierto');
             escena.classList.remove('blur-active');
             
             setTimeout(() => {
                 teatro.style.display = 'none';
-                iframe.src = "";
+                iframe.src = ""; // Corta el audio de forma inmediata al cerrar
             }, 400);
         }
     </script>
