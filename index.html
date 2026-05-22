@@ -6,7 +6,7 @@
     <title>MundoParalelo | Servicios Audiovisuales</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        /* --- TODOS LOS ESTILOS DE TU DEFAULT SE MANTIENEN INTACTOS --- */
+        /* --- ESTILOS BASE INTACTOS --- */
         body, html { 
             margin: 0; padding: 0; 
             width: 100%; height: 100%; 
@@ -24,47 +24,56 @@
         .capa-operador { position: absolute; top: 0; left: -30%; width: 100%; height: 100%; object-fit: cover; z-index: 2; opacity: 0; transition: all 0.5s ease-in-out; pointer-events: none; }
         .z3 { z-index: 3; } .z4 { z-index: 4; } .z5 { z-index: 5; }
 
+        /* --- MENÚ LATERAL RESTAURADO Y CORREGIDO --- */
+        .menu-lateral { 
+            position: absolute; 
+            left: 30px; 
+            top: 35%; 
+            z-index: 10; 
+            display: flex; 
+            flex-direction: column; 
+            gap: 15px; 
+        }
+
         .btn-trigger {
-            position: absolute; left: 30px; top: 40%;
-            width: 220px; height: 60px; z-index: 10; 
+            width: 220px; height: 55px; 
             cursor: pointer; border-left: 3px solid #017b9e;
             background: rgba(1, 123, 158, 0.05);
             display: flex; align-items: center; padding-left: 15px;
             color: #017b9e; font-family: 'Orbitron', sans-serif;
-            font-size: 11px; text-transform: uppercase; letter-spacing: 2px;
+            font-size: 10px; text-transform: uppercase; letter-spacing: 2px;
             transition: 0.3s;
         }
         .btn-trigger:hover { background: rgba(1, 123, 158, 0.15); color: #00ffff; border-left: 3px solid #00ffff; }
-        .btn-trigger:hover ~ .capa-operador { left: -10%; opacity: 1; }
+        /* Mantiene el trigger de la foto del operador al pasar el mouse sobre el menú entero */
+        .menu-lateral:hover ~ .capa-operador { left: -10%; opacity: 1; }
 
         .contact-container { position: relative; z-index: 100; text-align: center; margin-top: 20px; }
         .email { display: inline-block; position: fixed; bottom: 60px; left: 50%; transform: translateX(-50%); z-index: 99999; color: #00ffff !important; font-family: 'Orbitron', sans-serif; text-decoration: none; font-size: 0.8rem; letter-spacing: 3px; text-transform: uppercase; text-shadow: 0 0 10px #00ffff; transition: 0.3s; background: rgba(0, 0, 0, 0.5); padding: 10px 20px; border-radius: 5px; }
         .email:hover { color: white; text-shadow: 0 0 15px #00ffff, 0 0 20px #00ffff; }
         .capa-mail { display: block; width: 100%; max-width: 300px; margin: 10px auto; }
 
-        /* --- AGREGADO: NUEVO EFECTO INTERFAZ HUD CRT --- */
-        .blur-active { filter: blur(5px) brightness(0.4); } /* Desenfoque sutil al fondo original */
+        /* --- INTERFAZ HUD CRT --- */
+        .blur-active { filter: blur(5px) brightness(0.4); } 
 
         .teatro-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.7); /* Opacidad para ver el plexus de fondo */
-            display: none; justify-content: center; align-items: center; z-index: 10000;
-            backdrop-filter: blur(3px);
+            background: rgba(0, 0, 0, 0.75); 
+            display: none; flex-direction: column; justify-content: center; align-items: center; z-index: 10000;
+            backdrop-filter: blur(3px); gap: 20px; /* Separación entre el reproductor y el botón de cierre */
         }
 
         .contenedor-video-pro {
             width: 85%; max-width: 1100px; aspect-ratio: 16/9;
             position: relative; background: #000;
             border: 1px solid rgba(0, 255, 255, 0.3);
-            /* Animación de apertura CRT (se expande desde el centro) */
             transform: scaleX(0) scaleY(0.002);
             transition: transform 0.5s cubic-bezier(0.165, 0.84, 0.44, 1), opacity 0.3s;
-            opacity: 0; overflow: hidden; box-shadow: 0 0 30px rgba(0, 255, 255, 0.1);
+            opacity: 0; overflow: hidden; box-shadow: 0 0 30px rgba(0, 255, 255, 0.15);
         }
 
         .contenedor-video-pro.abierto { transform: scaleX(1) scaleY(1); opacity: 1; }
 
-        /* Capa técnica de Scanlines horizontales retro */
         .scanlines {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
             background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.15) 50%);
@@ -73,20 +82,47 @@
 
         #reproductorDrive { width: 100%; height: 100%; border: none; opacity: 0.92; }
 
-        .cerrar-video { position: absolute; top: -35px; right: 0; color: #00ffff; font-family: 'Orbitron'; font-size: 11px; cursor: pointer; letter-spacing: 2px; text-shadow: 0 0 5px #00ffff; }
+        /* NUEBO BOTÓN DE RETORNO DESTACADO ABAJO */
+        .boton-retorno-hud {
+            font-family: 'Orbitron', sans-serif;
+            color: #00ffff;
+            background: rgba(0, 255, 255, 0.05);
+            border: 1px solid rgba(0, 255, 255, 0.4);
+            padding: 12px 30px;
+            font-size: 12px;
+            letter-spacing: 3px;
+            cursor: pointer;
+            text-transform: uppercase;
+            transition: 0.3s;
+            text-shadow: 0 0 5px #00ffff;
+            box-shadow: 0 0 15px rgba(0, 255, 255, 0.1);
+        }
+        .boton-retorno-hud:hover {
+            background: rgba(0, 255, 255, 0.2);
+            color: #fff;
+            text-shadow: 0 0 10px #00ffff;
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
+        }
 
         @media (max-width: 768px) and (orientation: portrait) {
             .video-fondo, .mask { transform: rotate(90deg) scale(2.8); transform-origin: center; object-fit: cover; }
             .main-container { padding: 15px; display: flex; flex-direction: column; justify-content: center; align-items: center; }
             h1 { font-size: 9vw; width: 95%; margin-bottom: 20px; }
             .email { font-size: 4.5vw; bottom: 8%; }
+            .menu-lateral { left: 50%; top: 25%; transform: translateX(-50%); align-items: center; }
         }
     </style>
 </head>
 <body>
 
     <div class="main-container" id="escena">
-        <div class="btn-trigger" onclick="verVideo()">SERVICIO STREAMING PROFESIONAL</div>
+        
+        <div class="menu-lateral">
+            <div class="btn-trigger">SERVICIO STREAMING PROFESIONAL</div>
+            <div class="btn-trigger" onclick="verVideo()">NUESTROS SERVICIOS (VER VIDEO)</div>
+            <div class="btn-trigger" onclick="location.href='contacto.html'">CONTACTO DIRECTO</div>
+            <div class="btn-trigger">PROYECTOS 3D / VR</div>
+        </div>
 
         <video autoplay muted loop playsinline class="video-fondo">
             <source src="./Plexus_BG.mp4" type="video/mp4">
@@ -112,9 +148,9 @@
     <div id="videoTeatro" class="teatro-overlay">
         <div class="contenedor-video-pro" id="hubContainer">
             <div class="scanlines"></div>
-            <span class="cerrar-video" onclick="cerrarVideo()">TERMINAR_SESION [X]</span>
             <iframe id="reproductorDrive" src="" allow="autoplay"></iframe>
         </div>
+        <button class="boton-retorno-hud" onclick="cerrarVideo()">Regresar a la Interfaz [X]</button>
     </div>
 
     <script>
@@ -129,7 +165,7 @@
 
             setTimeout(() => {
                 hub.classList.add('abierto');
-                // URL corregida a formato /preview limpia para que cargue en el iframe
+                // Carga limpia en Drive Preview
                 iframe.src = "https://drive.google.com/file/d/15qVZc8Don4gEr6RPv060hzCI_fnF7fut/preview";
             }, 100);
         }
@@ -145,11 +181,9 @@
             
             setTimeout(() => {
                 teatro.style.display = 'none';
-                iframe.src = ""; // Apaga el video al cerrar
+                iframe.src = ""; // Apaga el video y audio inmediatamente
             }, 400);
         }
     </script>
-</body>
-</html>
 </body>
 </html>
